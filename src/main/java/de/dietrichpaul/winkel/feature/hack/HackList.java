@@ -1,6 +1,7 @@
 package de.dietrichpaul.winkel.feature.hack;
 
 import de.dietrichpaul.winkel.feature.hack.block.FastPlaceHack;
+import de.dietrichpaul.winkel.feature.hack.movement.JetpackHack;
 import de.dietrichpaul.winkel.feature.hack.movement.SpiderHack;
 import de.dietrichpaul.winkel.feature.hack.movement.SprintHack;
 import de.dietrichpaul.winkel.feature.hack.movement.StepHack;
@@ -20,6 +21,7 @@ public class HackList {
     public FastPlaceHack fastPlace = new FastPlaceHack();
 
     // Movement
+    public JetpackHack jetpackHack = new JetpackHack();
     public SpiderHack spider = new SpiderHack();
     public SprintHack sprint = new SprintHack();
     public StepHack step = new StepHack();

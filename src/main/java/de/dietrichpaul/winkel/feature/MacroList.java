@@ -22,6 +22,7 @@ public class MacroList implements KeyInputListener {
         bind("b", "FullBright");
         bind("k", "Spider");
         bind("u", "FastPlace");
+        bind("i", "Jetpack");
         WinkelClient.INSTANCE.getEventDispatcher().subscribe(KeyInputListener.class, this);
     }
 

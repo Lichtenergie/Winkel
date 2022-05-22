@@ -7,6 +7,9 @@ import de.dietrichpaul.winkel.feature.MacroList;
 import de.dietrichpaul.winkel.feature.command.CommandManager;
 import de.dietrichpaul.winkel.feature.hack.HackList;
 import de.dietrichpaul.winkel.util.KeyboardMapper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.MacWindowUtil;
+import net.minecraft.client.util.Window;
 
 public class WinkelClient {
     public static final WinkelClient INSTANCE = new WinkelClient();
