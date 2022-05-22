@@ -1,21 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "winkel",
   "version": "${version}",
-
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Winkel",
+  "description": "THE rotateling wonkel. :3",
   "authors": [
-    "Me!"
+    "AdvancedCode/DietrichPaul"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-
   "license": "CC0-1.0",
   "icon": "assets/modid/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -23,11 +20,10 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "winkel.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
     "minecraft": "1.18.2",
     "java": ">=17"
