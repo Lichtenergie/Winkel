@@ -6,6 +6,8 @@ import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 
 public final class JetpackHack extends Hack implements UpdateListener {
+    private boolean spoofOnGround = true;
+
     public JetpackHack() {
         super("Jetpack", "yay, a jetpack. :3", HackCategory.MOVEMENT);
     }

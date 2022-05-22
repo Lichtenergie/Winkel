@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MacroList implements KeyInputListener {
-
     private final Map<String, List<String>> actions = new LinkedHashMap<>();
 
     public MacroList() {
@@ -23,6 +22,7 @@ public class MacroList implements KeyInputListener {
         bind("k", "Spider");
         bind("u", "FastPlace");
         bind("i", "Jetpack");
+        bind("o", "NoFall");
         WinkelClient.INSTANCE.getEventDispatcher().subscribe(KeyInputListener.class, this);
     }
 
@@ -52,5 +52,4 @@ public class MacroList implements KeyInputListener {
             }
         }
     }
-
 }
