@@ -7,7 +7,6 @@ import de.dietrichpaul.winkel.WinkelClient;
 import net.minecraft.client.MinecraftClient;
 
 public abstract class Command {
-
     private final String[] aliases;
 
     protected WinkelClient winkel = WinkelClient.INSTANCE;
@@ -32,5 +31,4 @@ public abstract class Command {
     public String[] getAliases() {
         return aliases;
     }
-
 }

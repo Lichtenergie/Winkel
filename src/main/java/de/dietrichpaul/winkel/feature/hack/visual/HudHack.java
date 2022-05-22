@@ -1,9 +1,11 @@
 package de.dietrichpaul.winkel.feature.hack.visual;
 
+import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.list.render.RenderOverlayListener;
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.util.Formatting;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -25,9 +27,25 @@ public class HudHack extends Hack implements RenderOverlayListener {
         winkel.getEventDispatcher().unsubscribe(RenderOverlayListener.class, this);
     }
 
+    // todo: widget-system
     @Override
     public void onRender(RenderOverlayEvent event) {
         TextRenderer font = client.textRenderer;
+
+        // client-name
+        final float titleScale = 1.65F, versionScale = .75F;
+        event.getMatrices().push();
+        event.getMatrices().scale(titleScale, titleScale, titleScale);
+        font.drawWithShadow(event.getMatrices(), WinkelClient.NAME, 2, 2, -1);
+        event.getMatrices().pop();
+
+        event.getMatrices().push();
+        event.getMatrices().scale(versionScale, versionScale, versionScale);
+        font.drawWithShadow(event.getMatrices(), String.format("%s%s", Formatting.UNDERLINE, WinkelClient.VERSION),
+                2 + (font.getWidth(WinkelClient.NAME) * titleScale) + 20, 2, -1);
+        event.getMatrices().pop();
+
+        // module-list
         List<Hack> sortedHacks = new LinkedList<>();
         for (Hack hack : winkel.getHackList().getHacks()) {
             if (hack.isEnabled())

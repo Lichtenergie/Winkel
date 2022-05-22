@@ -9,10 +9,10 @@ public class FullBrightHack extends Hack {
         super("FullBright", "", HackCategory.VISUAL);
     }
 
-    private float strength = 1.0F;
+    private float strength = 2.0F;
 
     public float getStrength() {
-        return this.strength;
+        return .65f;
     }
 
 }
