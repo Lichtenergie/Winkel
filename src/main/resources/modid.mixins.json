@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.dietrichpaul.winkel.injection.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "client.gui.screen.ChatScreenMixin",
+    "client.gui.screen.CommandSuggestorMixin",
+    "client.renderer.GameRendererMixin"
+  ],
+  "client": [
+    "client.KeyboardMixin",
+    "client.MinecraftClientMixin",
+    "client.gui.hud.InGameHudMixin",
+    "client.network.ClientPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
