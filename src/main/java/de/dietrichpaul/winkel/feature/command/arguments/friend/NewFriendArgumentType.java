@@ -34,6 +34,8 @@ public class NewFriendArgumentType implements ArgumentType<String> {
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         SimpleSuggestionBuilder suggestionBuilder = new SimpleSuggestionBuilder(builder);
         for (PlayerListEntry playerListEntry : MinecraftClient.getInstance().getNetworkHandler().getPlayerList()) {
+            if (playerListEntry.getProfile().getName().equals(MinecraftClient.getInstance().player.getGameProfile().getName()))
+                continue;
             suggestionBuilder.add(playerListEntry.getProfile().getName());
         }
         return suggestionBuilder.build();

@@ -52,4 +52,13 @@ public class MacroList implements KeyInputListener {
             }
         }
     }
+
+    public void remove(String name) {
+        this.actions.remove(name);
+    }
+
+    public List<String> getActions(String name) {
+        return this.actions.get(name);
+    }
+
 }

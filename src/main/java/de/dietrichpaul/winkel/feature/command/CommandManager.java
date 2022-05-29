@@ -9,6 +9,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.Chat;
 import de.dietrichpaul.winkel.feature.command.list.FriendCommand;
+import de.dietrichpaul.winkel.feature.command.list.MacroCommand;
 import de.dietrichpaul.winkel.feature.command.list.ToggleCommand;
 import net.minecraft.server.command.HelpCommand;
 import net.minecraft.text.*;
@@ -24,6 +25,7 @@ public class CommandManager {
         this.commandListener = new CommandListener(this);
         this.commandListener.register(WinkelClient.INSTANCE.getEventDispatcher());
         this.addCommand(new FriendCommand());
+        this.addCommand(new MacroCommand());
         this.addCommand(new ToggleCommand());
     }
 

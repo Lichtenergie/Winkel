@@ -18,11 +18,11 @@ public abstract class Command {
         System.arraycopy(aliases, 0, this.aliases, 1, aliases.length);
     }
 
-    public LiteralArgumentBuilder<InternalCommandSource> literal(String name) {
+    public static LiteralArgumentBuilder<InternalCommandSource> literal(String name) {
         return LiteralArgumentBuilder.literal(name);
     }
 
-    public <T> RequiredArgumentBuilder<InternalCommandSource, T> argument(String name, ArgumentType<T> type) {
+    public static <T> RequiredArgumentBuilder<InternalCommandSource, T> argument(String name, ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
     }
 

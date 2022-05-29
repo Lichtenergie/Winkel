@@ -1,4 +1,4 @@
-package de.dietrichpaul.winkel.util;
+package de.dietrichpaul.winkel.util.keyboard;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

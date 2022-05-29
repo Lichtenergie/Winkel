@@ -6,12 +6,13 @@ import de.dietrichpaul.winkel.feature.FriendManager;
 import de.dietrichpaul.winkel.feature.MacroList;
 import de.dietrichpaul.winkel.feature.command.CommandManager;
 import de.dietrichpaul.winkel.feature.hack.HackList;
-import de.dietrichpaul.winkel.util.KeyboardMapper;
+import de.dietrichpaul.winkel.util.keyboard.KeyboardMapper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.MacWindowUtil;
-import net.minecraft.client.util.Window;
+
+import java.io.File;
 
 public class WinkelClient {
+
     public static final WinkelClient INSTANCE = new WinkelClient();
 
     public static final String NAME = "Winkel";
@@ -21,30 +22,25 @@ public class WinkelClient {
     private HackList hackList;
     private KeyboardMapper keyboardMapper;
     private CommandManager commandManager;
+    private FriendManager friendManager;
     private MacroList macroList;
     private Chat chat;
 
-    private FriendManager friendManager;
+    private File directory;
 
     public void init() {
+        this.directory = new File(MinecraftClient.getInstance().runDirectory, "Winkel");
         this.chat = new Chat();
         this.eventDispatcher = new EventDispatcher();
         this.hackList = new HackList();
-
-        /* managers */
         this.commandManager = new CommandManager();
-        this.friendManager = new FriendManager();
-
         this.keyboardMapper = new KeyboardMapper();
+        this.friendManager = new FriendManager();
         this.macroList = new MacroList();
     }
 
     public void start() {
         this.keyboardMapper.start();
-    }
-
-    public FriendManager getFriendManager() {
-        return this.friendManager;
     }
 
     public EventDispatcher getEventDispatcher() {
@@ -70,4 +66,9 @@ public class WinkelClient {
     public Chat getChat() {
         return chat;
     }
+
+    public FriendManager getFriendManager() {
+        return this.friendManager;
+    }
+
 }
