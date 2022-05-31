@@ -1,0 +1,17 @@
+{
+  "arguments.keyboard.unknown": "Unknown key-name: \"%s\"",
+  "arguments.newfriend.already_existing": "You are already friends with %s.",
+  "arguments.friend.not_found": "A friend named %s doesn't exists.",
+  "arguments.keyboard.unbound": "No actions are bound to %s.",
+  "command.property.state": "The property %s in %s equals %s.",
+  "command.property.set": "The property %s in %s was set to %s.",
+  "command.property.added": "The value %s was added to %s in %s.",
+  "command.property.removed": "The value %s was removed from %s in %s.",
+  "command.macro.add": "You bound %s to %s.",
+  "command.macro.remove": "You unbound everything from %s.",
+  "command.macro.list.header": "Actions which are bound to %s:",
+  "command.macro.list.entry": "- %s",
+  "command.friend.add": "Befriended %s.",
+  "command.friend.add_tag": "Befriended %s as %s.",
+  "command.friend.remove": "Unfriended %s."
+}
