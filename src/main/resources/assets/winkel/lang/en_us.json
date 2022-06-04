@@ -13,5 +13,7 @@
   "command.macro.list.entry": "- %s",
   "command.friend.add": "Befriended %s.",
   "command.friend.add_tag": "Befriended %s as %s.",
-  "command.friend.remove": "Unfriended %s."
+  "command.friend.remove": "Unfriended %s.",
+  "category.winkel": "Winkel",
+  "key.winkel.zoom": "Zoom"
 }

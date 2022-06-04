@@ -11,12 +11,11 @@
     "client.gui.screen.CommandSuggestorMixin",
     "client.network.ClientPlayerEntityMixin",
     "client.renderer.GameRendererMixin",
-    "item.MiningToolItemMixin"
+    "item.MiningToolItemMixin",
+    "client.MouseMixin",
+    "client.network.ClientLoginNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "client.network.ClientLoginNetworkHandlerMixin"
-  ]
+  }
 }
