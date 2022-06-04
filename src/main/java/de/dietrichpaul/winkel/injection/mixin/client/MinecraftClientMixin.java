@@ -6,11 +6,13 @@ import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import net.minecraft.client.resource.ClientBuiltinResourcePackProvider;
+import net.minecraft.client.util.Session;
 import net.minecraft.client.util.Window;
 import net.minecraft.resource.ResourceManager;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -40,6 +42,9 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
 
     @Shadow
     public abstract ResourceManager getResourceManager();
+
+    @Mutable
+    @Shadow @Final private Session session;
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setFramerateLimit(I)V", shift = At.Shift.BEFORE))
     public void onInit(RunArgs args, CallbackInfo ci) {
@@ -73,6 +78,16 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
     @Override
     public void setItemUseCooldown(int ticks) {
         this.itemUseCooldown = ticks;
+    }
+
+    @Override
+    public Session getSession() {
+        return this.session;
+    }
+
+    @Override
+    public void setSession(Session session) {
+        this.session = session;
     }
 
 }

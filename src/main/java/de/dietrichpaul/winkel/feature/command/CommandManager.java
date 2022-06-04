@@ -8,6 +8,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.Chat;
+import de.dietrichpaul.winkel.feature.command.list.AltCommand;
 import de.dietrichpaul.winkel.feature.command.list.FriendCommand;
 import de.dietrichpaul.winkel.feature.command.list.MacroCommand;
 import de.dietrichpaul.winkel.feature.command.list.ToggleCommand;
@@ -24,6 +25,7 @@ public class CommandManager {
     public CommandManager() {
         this.commandListener = new CommandListener(this);
         this.commandListener.register(WinkelClient.INSTANCE.getEventDispatcher());
+        this.addCommand(new AltCommand());
         this.addCommand(new FriendCommand());
         this.addCommand(new MacroCommand());
         this.addCommand(new ToggleCommand());
