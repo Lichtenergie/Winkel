@@ -1,17 +1,16 @@
 package de.dietrichpaul.winkel.feature.command.list;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.input.BoundKeyArgumentType;
 import de.dietrichpaul.winkel.feature.command.arguments.input.KeyArgumentType;
+import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.suggestion.HackSuggestor;
 import de.dietrichpaul.winkel.util.keyboard.WKey;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class MacroCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<InternalCommandSource> base) {
+    public void build(SimpleBaseArgumentBuilder<InternalCommandSource> base) {
             base.then(
                     literal("add").then(
                             argument("key", KeyArgumentType.key()).then(
@@ -45,7 +44,7 @@ public class MacroCommand extends Command {
             );
     }
 
-    private int list(CommandContext<InternalCommandSource> context) {
+    private void list(CommandContext<InternalCommandSource> context) {
         WKey key = BoundKeyArgumentType.getKey(context, "key");
 
         List<String> actions = WinkelClient.INSTANCE.getMacroList().getActions(key.getName());
@@ -57,10 +56,9 @@ public class MacroCommand extends Command {
                     .formatted(Formatting.GRAY));
         }
 
-        return 1;
     }
 
-    private int remove(CommandContext<InternalCommandSource> context) {
+    private void remove(CommandContext<InternalCommandSource> context) {
         WKey key = KeyArgumentType.getKey(context, "key");
 
         WinkelClient.INSTANCE.getMacroList().remove(key.getName());
@@ -68,10 +66,9 @@ public class MacroCommand extends Command {
         WinkelClient.INSTANCE.getChat().print("command.macro.remove",
                 new LiteralText(key.getName()).formatted(Formatting.GRAY));
 
-        return 1;
     }
 
-    private int add(CommandContext<InternalCommandSource> context) {
+    private void add(CommandContext<InternalCommandSource> context) {
         WKey key = KeyArgumentType.getKey(context, "key");
         String action = StringArgumentType.getString(context, "action");
 
@@ -80,7 +77,6 @@ public class MacroCommand extends Command {
                 new LiteralText(action).formatted(Formatting.GRAY),
                 new LiteralText(key.getName()).formatted(Formatting.GRAY));
 
-        return 1;
     }
 
 }

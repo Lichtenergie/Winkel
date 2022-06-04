@@ -2,14 +2,14 @@ package de.dietrichpaul.winkel.feature.command.list;
 
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import de.dietrichpaul.winkel.feature.alt.AltSession;
 import de.dietrichpaul.winkel.feature.alt.AuthenticationProvider;
-import de.dietrichpaul.winkel.feature.alt.AuthenticationProviderMap;
 import de.dietrichpaul.winkel.feature.alt.CredentialField;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
+import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
+import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
+import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
 import net.minecraft.text.LiteralText;
 
 import java.util.HashMap;
@@ -23,15 +23,15 @@ public class AltCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<InternalCommandSource> base) {
+    public void build(SimpleBaseArgumentBuilder<InternalCommandSource> base) {
         for (Map.Entry<String, AuthenticationProvider<?>> entry : winkel.getAuthenticationProviderMap().getProviders().entrySet()) {
-            LiteralArgumentBuilder<InternalCommandSource> start = literal(entry.getKey().toLowerCase(Locale.ROOT));
-            ArgumentBuilder<InternalCommandSource, ?> iterativeTemp = start;
+            SimpleLiteralArgumentBuilder<InternalCommandSource> start = literal(entry.getKey().toLowerCase(Locale.ROOT));
+            SimpleArgumentBuilder<InternalCommandSource, ?> iterativeTemp = start;
             AuthenticationProvider authenticationProvider = entry.getValue();
             CredentialField[] field = authenticationProvider.getCredentialField();
             for (int i = 0; i < field.length; i++) {
                 CredentialField credentialField = field[i];
-                ArgumentBuilder<InternalCommandSource, ?> temp = argument(credentialField.getName(), StringArgumentType.string());
+                SimpleArgumentBuilder<InternalCommandSource, ?> temp = argument(credentialField.getName(), StringArgumentType.string());
                 if (i == field.length - 1) {
                     temp.executes(ctx -> {
                         Map<String, String> textBoxes = new HashMap<>();
@@ -45,7 +45,6 @@ public class AltCommand extends Command {
                         } catch (AuthenticationException e) {
                             winkel.getChat().error(new LiteralText(e.getMessage()));
                         }
-                        return 1;
                     });
                 }
                 iterativeTemp.then(temp);

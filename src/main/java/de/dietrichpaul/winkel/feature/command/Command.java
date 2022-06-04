@@ -4,6 +4,9 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
+import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
+import de.dietrichpaul.winkel.feature.command.node.SimpleRequiredArgumentBuilder;
 import net.minecraft.client.MinecraftClient;
 
 public abstract class Command {
@@ -18,15 +21,15 @@ public abstract class Command {
         System.arraycopy(aliases, 0, this.aliases, 1, aliases.length);
     }
 
-    public static LiteralArgumentBuilder<InternalCommandSource> literal(String name) {
-        return LiteralArgumentBuilder.literal(name);
+    public static SimpleLiteralArgumentBuilder<InternalCommandSource> literal(String name) {
+        return SimpleLiteralArgumentBuilder.literal(name);
     }
 
-    public static <T> RequiredArgumentBuilder<InternalCommandSource, T> argument(String name, ArgumentType<T> type) {
-        return RequiredArgumentBuilder.argument(name, type);
+    public static <T> SimpleRequiredArgumentBuilder<InternalCommandSource, T> argument(String name, ArgumentType<T> type) {
+        return SimpleRequiredArgumentBuilder.argument(name, type);
     }
 
-    public abstract void build(LiteralArgumentBuilder<InternalCommandSource> base);
+    public abstract void build(SimpleBaseArgumentBuilder<InternalCommandSource> base);
 
     public String[] getAliases() {
         return aliases;

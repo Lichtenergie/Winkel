@@ -12,6 +12,8 @@ import de.dietrichpaul.winkel.feature.command.list.AltCommand;
 import de.dietrichpaul.winkel.feature.command.list.FriendCommand;
 import de.dietrichpaul.winkel.feature.command.list.MacroCommand;
 import de.dietrichpaul.winkel.feature.command.list.ToggleCommand;
+import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
+import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
 import net.minecraft.server.command.HelpCommand;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
@@ -69,7 +71,7 @@ public class CommandManager {
 
     public void addCommand(Command command) {
         for (String alias : command.getAliases()) {
-            LiteralArgumentBuilder<InternalCommandSource> literal = LiteralArgumentBuilder.literal(alias);
+            SimpleBaseArgumentBuilder<InternalCommandSource> literal = SimpleBaseArgumentBuilder.literal(alias);
             command.build(literal);
             dispatcher.register(literal);
         }
