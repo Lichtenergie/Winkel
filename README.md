@@ -3,7 +3,7 @@
 ## Disclaimer
 
 This mod is designed for cheating, griefing and utility-stuff.\
-The current minecraft version of the modification is currently the 1.18.2.\
+The current minecraft version of the modification is the 1.18.2.\
 Created with the [Example-Mod](https://github.com/FabricMC/fabric-example-mod) from [Fabric](https://fabricmc.net/).
 
 ## License
