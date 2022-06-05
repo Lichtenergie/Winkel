@@ -13,6 +13,7 @@ import de.dietrichpaul.winkel.feature.alt.easymc.EasyMCAuthenticationProvider;
 import de.dietrichpaul.winkel.feature.command.CommandManager;
 import de.dietrichpaul.winkel.feature.hack.HackList;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
+import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.util.keyboard.KeyboardMapper;
 import net.minecraft.client.MinecraftClient;
 
@@ -32,6 +33,7 @@ public class WinkelClient {
     private CommandManager commandManager;
     private FriendManager friendManager;
     private MacroList macroList;
+    private PropertyMap propertyMap;
     private Chat chat;
     private Zoom zoom;
     private AuthenticationProviderMap authenticationProviderMap;
@@ -42,6 +44,7 @@ public class WinkelClient {
 
     public void init() {
         this.directory = new File(MinecraftClient.getInstance().runDirectory, "Winkel");
+        this.propertyMap = new PropertyMap();
         this.chat = new Chat();
         this.authenticationProviderMap = new AuthenticationProviderMap();
         this.eventDispatcher = new EventDispatcher();
@@ -112,6 +115,10 @@ public class WinkelClient {
 
     public AuthenticationProviderMap getAuthenticationProviderMap() {
         return authenticationProviderMap;
+    }
+
+    public PropertyMap getPropertyMap() {
+        return propertyMap;
     }
 
 }

@@ -6,6 +6,7 @@ import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.EnumArgument;
+import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.util.EnumIdentifiable;
 import net.minecraft.text.LiteralText;
@@ -32,8 +33,8 @@ public class EnumProperty<T extends Enum<T> & EnumIdentifiable> extends Abstract
     }
 
     @Override
-    public LiteralArgumentBuilder<InternalCommandSource> makeCommand(LiteralArgumentBuilder<InternalCommandSource> builder) {
-        return builder.then(Command.argument("enum", EnumArgument.enumArgument(this.values)).executes(context -> {
+    public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
+        builder.then(Command.argument("enum", EnumArgument.enumArgument(this.values)).executes(context -> {
             setValue(EnumArgument.getEnumConstant(context, "enum"));
             WinkelClient.INSTANCE.getChat().print("command.property.set", new LiteralText(getName()).formatted(Formatting.GRAY), new LiteralText(getParent().asString()).formatted(Formatting.GRAY), new LiteralText("").append(getValueText()).formatted(Formatting.GRAY));
             return 1;

@@ -11,6 +11,7 @@ import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.target.TargetSelectionAddArgumentType;
 import de.dietrichpaul.winkel.feature.command.arguments.target.TargetSelectionRemoveArgumentType;
+import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.OtherClientPlayerEntity;
@@ -94,8 +95,8 @@ public class TargetSelectionProperty extends AbstractProperty<List<TargetFilter>
     }
 
     @Override
-    public LiteralArgumentBuilder<InternalCommandSource> makeCommand(LiteralArgumentBuilder<InternalCommandSource> builder) {
-        return builder
+    public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
+         builder
                 .then(
                         Command.literal("add")
                                 .then(Command.argument("filter", TargetSelectionAddArgumentType.addTargetSelection(this)).executes(context -> {

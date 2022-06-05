@@ -1,8 +1,10 @@
 package de.dietrichpaul.winkel.property;
 
 import com.google.gson.JsonObject;
+import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
+import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
@@ -40,8 +42,7 @@ public abstract class AbstractProperty<T> {
 
     public abstract void writeToJson(JsonObject element);
 
-    public LiteralArgumentBuilder<InternalCommandSource> makeCommand(LiteralArgumentBuilder<InternalCommandSource> builder) {
-        return null;
+    public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
     }
 
     public StringIdentifiable getParent() {

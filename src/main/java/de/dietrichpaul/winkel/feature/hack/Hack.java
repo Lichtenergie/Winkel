@@ -6,8 +6,9 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.StringIdentifiable;
 
-public class Hack {
+public class Hack implements StringIdentifiable {
 
     private String name;
     private String description;
@@ -66,6 +67,11 @@ public class Hack {
 
     public HackCategory getCategory() {
         return category;
+    }
+
+    @Override
+    public String asString() {
+        return this.name;
     }
 
 }

@@ -8,10 +8,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.Chat;
-import de.dietrichpaul.winkel.feature.command.list.AltCommand;
-import de.dietrichpaul.winkel.feature.command.list.FriendCommand;
-import de.dietrichpaul.winkel.feature.command.list.MacroCommand;
-import de.dietrichpaul.winkel.feature.command.list.ToggleCommand;
+import de.dietrichpaul.winkel.feature.command.list.*;
 import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
 import net.minecraft.server.command.HelpCommand;
@@ -30,6 +27,7 @@ public class CommandManager {
         this.addCommand(new AltCommand());
         this.addCommand(new FriendCommand());
         this.addCommand(new MacroCommand());
+        this.addCommand(new PropertyCommand());
         this.addCommand(new ToggleCommand());
     }
 
