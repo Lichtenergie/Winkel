@@ -2,6 +2,10 @@ package de.dietrichpaul.winkel.feature.hack;
 
 import de.dietrichpaul.winkel.WinkelClient;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class Hack {
 
@@ -46,6 +50,14 @@ public class Hack {
 
     public String getName() {
         return name;
+    }
+
+    public Text getButtonText() {
+        MutableText text = new LiteralText(this.name);
+        if (this.isEnabled()) {
+            text.formatted(Formatting.GRAY);
+        }
+        return text;
     }
 
     public String getDescription() {

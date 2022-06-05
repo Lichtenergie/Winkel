@@ -2,11 +2,16 @@ package de.dietrichpaul.winkel.feature.hack.visual;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.list.KeyInputListener;
 import de.dietrichpaul.winkel.event.list.render.RenderOverlayListener;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Button;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
+import de.dietrichpaul.winkel.feature.gui.tab.TabGui;
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
@@ -18,19 +23,37 @@ public class HudHack extends Hack implements RenderOverlayListener {
 
     private final Identifier logo;
 
+    private TabGui tabGui;
+
     public HudHack() {
         super("Hud", "", HackCategory.VISUAL);
         logo = new Identifier(WinkelClient.NAME.toLowerCase(), "icons/client.png");
+
+
     }
 
     @Override
     protected void onEnable() {
+        if (this.tabGui == null) {
+            this.tabGui = new TabGui();
+            for (HackCategory category : HackCategory.values()) {
+                Container container = new Container(category.getIdentifier());
+                for (Hack hack : WinkelClient.INSTANCE.getHackList().getHacks()) {
+                    if (hack.getCategory() == category) {
+                        container.add(new Button(hack::getButtonText, hack::toggle));
+                    }
+                }
+                this.tabGui.add(container);
+            }
+        }
         winkel.getEventDispatcher().subscribe(RenderOverlayListener.class, this);
+        winkel.getEventDispatcher().subscribe(KeyInputListener.class, this.tabGui);
     }
 
     @Override
     protected void onDisable() {
         winkel.getEventDispatcher().unsubscribe(RenderOverlayListener.class, this);
+        winkel.getEventDispatcher().unsubscribe(KeyInputListener.class, this.tabGui);
     }
 
     // todo: widget-system
@@ -76,6 +99,8 @@ public class HudHack extends Hack implements RenderOverlayListener {
             font.drawWithShadow(event.getMatrices(), hack.getName(), windowWidth - width - 4, yOffset + 4, -1);
             yOffset += 14;
         }
+
+        tabGui.render(event.getMatrices(), event.getDelta());
     }
 
 }
