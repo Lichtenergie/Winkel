@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class NewFriendArgumentType implements ArgumentType<String> {
 
-    private final static DynamicCommandExceptionType FRIEND_ALREADY_EXISTING = new DynamicCommandExceptionType(o -> new TranslatableText("arguments.newfriend.already_existing", o));
+    private final static DynamicCommandExceptionType FRIEND_ALREADY_EXISTING = new DynamicCommandExceptionType(o -> new TranslatableText("arguments.new-friend.already_existing", o));
 
     private NewFriendArgumentType() {
     }

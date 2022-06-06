@@ -1,6 +1,6 @@
 {
   "arguments.keyboard.unknown": "Unknown key-name: \"%s\"",
-  "arguments.newfriend.already_existing": "You are already friends with %s.",
+  "arguments.new-friend.already_existing": "You are already friends with %s.",
   "arguments.friend.not_found": "A friend named %s doesn't exists.",
   "arguments.keyboard.unbound": "No actions are bound to %s.",
   "command.property.state": "The property %s in %s equals %s.",
