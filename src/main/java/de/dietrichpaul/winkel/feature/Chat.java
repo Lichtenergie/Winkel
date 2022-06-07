@@ -15,7 +15,7 @@ public class Chat {
             .append(new LiteralText("[")
                     .formatted(Formatting.DARK_GRAY, Formatting.BOLD))
 
-            // &c&lAxiom
+            // &6&lWinkel
             .append(new LiteralText("Winkel")
                     .formatted(Formatting.GOLD, Formatting.BOLD))
 
