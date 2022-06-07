@@ -5,14 +5,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Container extends Item {
 
-    private String name;
+    private Supplier<Text> textSupplier;
 
     private boolean expanded;
 
@@ -21,8 +23,8 @@ public class Container extends Item {
     private int width;
     private int selection;
 
-    public Container(String name) {
-        this.name = name;
+    public Container(Supplier<Text> textSupplier) {
+        this.textSupplier = textSupplier;
     }
 
     public void add(Item item) {
@@ -36,13 +38,13 @@ public class Container extends Item {
 
     @Override
     public int getWidth() {
-        return MinecraftClient.getInstance().textRenderer.getWidth(this.name) + 4;
+        return MinecraftClient.getInstance().textRenderer.getWidth(this.textSupplier.get()) + 4;
     }
 
     @Override
     public void render(MatrixStack matrices, float delta) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-        textRenderer.drawWithShadow(matrices, this.name, this.x + 2, this.y + 2F, -1);
+        textRenderer.drawWithShadow(matrices, this.textSupplier.get(), this.x + 2, this.y + 2F, -1);
 
         if (this.expanded) {
             this.updatePositions(this.x + this.maxWidth + 4, this.y);

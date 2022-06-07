@@ -1,5 +1,8 @@
 package de.dietrichpaul.winkel.feature.hack;
 
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+
 public enum HackCategory {
 
     BLOCK("block"),
@@ -11,13 +14,19 @@ public enum HackCategory {
     VISUAL("visual");
 
     private final String identifier;
+    private final Text display;
 
     HackCategory(String identifier) {
         this.identifier = identifier;
+        this.display = new TranslatableText("category." + identifier);
     }
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public Text getDisplay() {
+        return display;
     }
 
 }

@@ -54,16 +54,6 @@ public class WinkelClient {
         this.friendManager = new FriendManager();
         this.macroList = new MacroList();
         this.zoom = new Zoom();
-
-        System.out.println("ALARM");
-        this.altSession = new EasyMCAuthenticationProvider().create(Collections.singletonMap("token", "dijgr25EwHU7diVtZFXa"));
-        try {
-            System.out.println("LOGGING IN AAPIOJDPOIJASOPDIJPSIOJDAPIOJAPWDOJ");
-            this.altSession.getProvider().login(this.altSession);
-            System.out.println("LOGGED IN P)JDPOIJHA=D)JQ");
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        }
     }
 
     public void start() {

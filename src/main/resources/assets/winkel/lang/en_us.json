@@ -15,5 +15,12 @@
   "command.friend.add_tag": "Befriended %s as %s.",
   "command.friend.remove": "Unfriended %s.",
   "category.winkel": "Winkel",
-  "key.winkel.zoom": "Zoom"
+  "key.winkel.zoom": "Zoom",
+  "category.block": "Block",
+  "category.combat": "Combat",
+  "category.exploit": "Exploit",
+  "category.fun": "Fun",
+  "category.movement": "Movement",
+  "category.player": "Player",
+  "category.visual": "Visual"
 }

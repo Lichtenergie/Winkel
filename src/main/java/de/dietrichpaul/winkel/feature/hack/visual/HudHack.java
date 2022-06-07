@@ -37,7 +37,7 @@ public class HudHack extends Hack implements RenderOverlayListener {
         if (this.tabGui == null) {
             this.tabGui = new TabGui();
             for (HackCategory category : HackCategory.values()) {
-                Container container = new Container(category.getIdentifier());
+                Container container = new Container(category::getDisplay);
                 for (Hack hack : WinkelClient.INSTANCE.getHackList().getHacks()) {
                     if (hack.getCategory() == category) {
                         container.add(new Button(hack::getButtonText, hack::toggle));
