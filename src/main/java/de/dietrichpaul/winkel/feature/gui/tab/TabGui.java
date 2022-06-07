@@ -1,6 +1,7 @@
 package de.dietrichpaul.winkel.feature.gui.tab;
 
 import de.dietrichpaul.winkel.event.list.KeyInputListener;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import org.lwjgl.glfw.GLFW;
@@ -49,6 +50,8 @@ public class TabGui implements KeyInputListener {
 
     @Override
     public void onInput(KeyInputEvent event) {
+        if (MinecraftClient.getInstance().currentScreen != null)
+            return;
         if ((event.getAction() == GLFW.GLFW_PRESS || event.getAction() == GLFW.GLFW_REPEAT) && !this.items.get(this.selection).onKey(event.getKey())) {
             switch (event.getKey()) {
 
