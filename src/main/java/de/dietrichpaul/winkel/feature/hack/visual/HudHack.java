@@ -4,14 +4,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.list.KeyInputListener;
 import de.dietrichpaul.winkel.event.list.render.RenderOverlayListener;
+import de.dietrichpaul.winkel.feature.gui.tab.Item;
+import de.dietrichpaul.winkel.feature.gui.tab.TabGui;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Button;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
-import de.dietrichpaul.winkel.feature.gui.tab.TabGui;
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
+import de.dietrichpaul.winkel.property.AbstractProperty;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
@@ -40,7 +41,21 @@ public class HudHack extends Hack implements RenderOverlayListener {
                 Container container = new Container(category::getDisplay);
                 for (Hack hack : WinkelClient.INSTANCE.getHackList().getHacks()) {
                     if (hack.getCategory() == category) {
-                        container.add(new Button(hack::getButtonText, hack::toggle));
+                        Item hackItem;
+                        List<Item> hackItems = new LinkedList<>();
+                        for (AbstractProperty<?> property : winkel.getPropertyMap().getPropertiesByParent(hack)) {
+                            Item propertyItem = property.createTabGuiItem();
+                            if (propertyItem != null)
+                                hackItems.add(propertyItem);
+                        }
+                        if (!hackItems.isEmpty()) {
+                            Container hackItemContainer = new Container(hack::getButtonText, hack::toggle);
+                            hackItemContainer.addAll(hackItems);
+                            hackItem = hackItemContainer;
+                        } else {
+                            hackItem = new Button(hack::getButtonText, hack::toggle);
+                        }
+                        container.add(hackItem);
                     }
                 }
                 this.tabGui.add(container);

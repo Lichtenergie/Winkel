@@ -5,9 +5,11 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
+import de.dietrichpaul.winkel.feature.gui.tab.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
+import org.apache.commons.lang3.NotImplementedException;
 
 public abstract class AbstractProperty<T> {
 
@@ -71,6 +73,10 @@ public abstract class AbstractProperty<T> {
 
     public T getResetValue() {
         return resetValue;
+    }
+
+    public Item createTabGuiItem() {
+        return null;
     }
 
 }

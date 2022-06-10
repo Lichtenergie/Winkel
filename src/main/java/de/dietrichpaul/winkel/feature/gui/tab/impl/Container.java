@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class Container extends Item {
 
     private Supplier<Text> textSupplier;
+    private Runnable clickAction;
 
     private boolean expanded;
 
@@ -23,12 +24,23 @@ public class Container extends Item {
     private int width;
     private int selection;
 
-    public Container(Supplier<Text> textSupplier) {
+    public Container(Supplier<Text> textSupplier, Runnable clickAction) {
         this.textSupplier = textSupplier;
+        this.clickAction = clickAction;
+    }
+
+    public Container(Supplier<Text> textSupplier) {
+        this(textSupplier, null);
     }
 
     public void add(Item item) {
         this.items.add(item);
+    }
+
+    public void addAll(Iterable<Item> items) {
+        for (Item item : items) {
+            this.add(item);
+        }
     }
 
     @Override
@@ -72,8 +84,9 @@ public class Container extends Item {
 
     @Override
     public boolean onKey(int key) {
+        boolean childHandle = false;
         if (this.expanded) {
-            if (!this.items.get(this.selection).onKey(key)) {
+            if (!(childHandle = this.items.get(this.selection).onKey(key))) {
                 switch (key) {
 
                     case GLFW.GLFW_KEY_UP:
@@ -86,18 +99,30 @@ public class Container extends Item {
                         break;
 
                 }
+                if (selection == -1)
+                    selection = this.items.size() - 1;
+                if (selection == this.items.size()) {
+                    selection = 0;
+                }
             }
-            if (selection == -1)
-                selection = this.items.size() - 1;
-            if (selection == this.items.size()) {
-                selection = 0;
-            }
+
         }
         boolean prevExpanded = this.expanded;
         if (key == GLFW.GLFW_KEY_RIGHT && !this.items.isEmpty()) {
             this.expanded = true;
-        } else if (key == GLFW.GLFW_KEY_LEFT) {
-            this.expanded = false;
+        } else if (!childHandle) {
+            switch (key) {
+
+                case GLFW.GLFW_KEY_LEFT:
+                    this.expanded = false;
+                    break;
+
+                case GLFW.GLFW_KEY_ENTER:
+                    if (!this.expanded && this.clickAction != null)
+                        this.clickAction.run();
+                    break;
+
+            }
         }
         return prevExpanded || this.expanded;
     }
