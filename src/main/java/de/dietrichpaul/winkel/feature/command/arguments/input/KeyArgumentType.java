@@ -10,15 +10,14 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.SimpleSuggestionBuilder;
 import de.dietrichpaul.winkel.util.keyboard.WKey;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.concurrent.CompletableFuture;
 
 public class KeyArgumentType implements ArgumentType<WKey> {
 
     public static final DynamicCommandExceptionType INPUT_UNKNOWN = new DynamicCommandExceptionType(
-            arg -> new TranslatableText("arguments.keyboard.unknown", arg));
+            arg -> Text.translatable("arguments.keyboard.unknown", arg));
 
     private KeyArgumentType() {
     }

@@ -9,13 +9,13 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.SimpleSuggestionBuilder;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.concurrent.CompletableFuture;
 
 public class FriendArgumentType implements ArgumentType<String> {
 
-    private static final DynamicCommandExceptionType FRIEND_NOT_FOUND = new DynamicCommandExceptionType(o -> new TranslatableText("arguments.friend.not_found", o));
+    private static final DynamicCommandExceptionType FRIEND_NOT_FOUND = new DynamicCommandExceptionType(o -> Text.translatable("arguments.friend.not_found", o));
 
     private FriendArgumentType() {
     }

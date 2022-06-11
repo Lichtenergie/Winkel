@@ -5,7 +5,6 @@ import de.dietrichpaul.winkel.util.MathUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -47,9 +46,9 @@ public class Scroll extends Item {
         float min = this.minSupplier.get();
         float max = this.maxSupplier.get();
 
-        MutableText valueText = new LiteralText(floatFormat.format(value));
+        MutableText valueText = Text.literal(floatFormat.format(value));
 
-        MutableText extraMax = new LiteralText(" ⬆");
+        MutableText extraMax = Text.literal(" ⬆");
         if (max == Float.POSITIVE_INFINITY) {
             extraMax.formatted(Formatting.DARK_GREEN);
         } else if (value == max) {
@@ -58,7 +57,7 @@ public class Scroll extends Item {
             extraMax.formatted(Formatting.GREEN);
         }
 
-        MutableText extraMin = new LiteralText("⬇");
+        MutableText extraMin = Text.literal("⬇");
         if (min == Float.NEGATIVE_INFINITY) {
             extraMin.formatted(Formatting.DARK_GREEN);
         } else if (value == min) {

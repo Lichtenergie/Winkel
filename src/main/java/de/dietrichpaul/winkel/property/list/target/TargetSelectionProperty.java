@@ -1,11 +1,8 @@
 package de.dietrichpaul.winkel.property.list.target;
 
-import com.google.common.base.Predicates;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
@@ -21,11 +18,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.mob.*;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.passive.MerchantEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -102,8 +101,8 @@ public class TargetSelectionProperty extends AbstractProperty<List<TargetFilter>
                                 .then(Command.argument("filter", TargetSelectionAddArgumentType.addTargetSelection(this)).executes(context -> {
                                     TargetFilter filter = TargetSelectionAddArgumentType.getTargetFilter(context, "filter");
                                     getValue().add(filter);
-                                    WinkelClient.INSTANCE.getChat().print("command.property.added",new LiteralText(filter.name()).formatted(Formatting.GRAY),
-                                            new LiteralText(getName()).formatted(Formatting.GRAY), new LiteralText(getParent().asString()).formatted(Formatting.GRAY));
+                                    WinkelClient.INSTANCE.getChat().print("command.property.added", Text.literal(filter.name()).formatted(Formatting.GRAY),
+                                            Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY));
                                     return 1;
                                 }))
                 )
@@ -112,8 +111,8 @@ public class TargetSelectionProperty extends AbstractProperty<List<TargetFilter>
                                 .then(Command.argument("filter", TargetSelectionRemoveArgumentType.removeTargetSelection(this)).executes(context -> {
                                     TargetFilter filter = TargetSelectionRemoveArgumentType.getTargetFilter(context, "filter");
                                     getValue().remove(filter);
-                                    WinkelClient.INSTANCE.getChat().print("command.property.removed",new LiteralText(filter.name()).formatted(Formatting.GRAY),
-                                            new LiteralText(getName()).formatted(Formatting.GRAY), new LiteralText(getParent().asString()).formatted(Formatting.GRAY));
+                                    WinkelClient.INSTANCE.getChat().print("command.property.removed", Text.literal(filter.name()).formatted(Formatting.GRAY),
+                                            Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY));
                                     return 1;
                                 }))
                 );

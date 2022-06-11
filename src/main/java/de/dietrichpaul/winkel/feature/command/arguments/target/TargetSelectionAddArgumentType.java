@@ -10,7 +10,6 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import de.dietrichpaul.winkel.feature.command.SimpleSuggestionBuilder;
 import de.dietrichpaul.winkel.property.list.target.TargetFilter;
 import de.dietrichpaul.winkel.property.list.target.TargetSelectionProperty;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 import java.util.concurrent.CompletableFuture;
@@ -18,8 +17,8 @@ import java.util.stream.Collectors;
 
 public class TargetSelectionAddArgumentType implements ArgumentType<TargetFilter> {
 
-    private static final DynamicCommandExceptionType TARGET_FILTER_NOT_FOUND = new DynamicCommandExceptionType(o -> new LiteralText("Filter not found \"" + o + "\""));
-    private static final DynamicCommandExceptionType TARGET_FILTER_ALREADY_PRESENT = new DynamicCommandExceptionType(o -> new LiteralText("Filter is already present \"" + o + "\""));
+    private static final DynamicCommandExceptionType TARGET_FILTER_NOT_FOUND = new DynamicCommandExceptionType(o -> Text.literal("Filter not found \"" + o + "\""));
+    private static final DynamicCommandExceptionType TARGET_FILTER_ALREADY_PRESENT = new DynamicCommandExceptionType(o -> Text.literal("Filter is already present \"" + o + "\""));
 
     private TargetSelectionProperty property;
 

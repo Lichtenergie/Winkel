@@ -10,7 +10,7 @@ import de.dietrichpaul.winkel.feature.command.arguments.input.KeyArgumentType;
 import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.suggestion.HackSuggestor;
 import de.dietrichpaul.winkel.util.keyboard.WKey;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -50,9 +50,9 @@ public class MacroCommand extends Command {
         List<String> actions = WinkelClient.INSTANCE.getMacroList().getActions(key.getName());
 
         WinkelClient.INSTANCE.getChat().print("command.macro.list.header",
-                new LiteralText(key.getName()).formatted(Formatting.GRAY));
+                Text.literal(key.getName()).formatted(Formatting.GRAY));
         for (String action : actions) {
-            WinkelClient.INSTANCE.getChat().print("command.macro.list.entry", new LiteralText(action)
+            WinkelClient.INSTANCE.getChat().print("command.macro.list.entry", Text.literal(action)
                     .formatted(Formatting.GRAY));
         }
 
@@ -64,7 +64,7 @@ public class MacroCommand extends Command {
         WinkelClient.INSTANCE.getMacroList().remove(key.getName());
 
         WinkelClient.INSTANCE.getChat().print("command.macro.remove",
-                new LiteralText(key.getName()).formatted(Formatting.GRAY));
+                Text.literal(key.getName()).formatted(Formatting.GRAY));
 
     }
 
@@ -74,8 +74,8 @@ public class MacroCommand extends Command {
 
         WinkelClient.INSTANCE.getMacroList().bind(key.getName(), action);
         WinkelClient.INSTANCE.getChat().print("command.macro.add",
-                new LiteralText(action).formatted(Formatting.GRAY),
-                new LiteralText(key.getName()).formatted(Formatting.GRAY));
+                Text.literal(action).formatted(Formatting.GRAY),
+                Text.literal(key.getName()).formatted(Formatting.GRAY));
 
     }
 

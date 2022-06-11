@@ -11,13 +11,13 @@ import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.SimpleSuggestionBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.concurrent.CompletableFuture;
 
 public class NewFriendArgumentType implements ArgumentType<String> {
 
-    private final static DynamicCommandExceptionType FRIEND_ALREADY_EXISTING = new DynamicCommandExceptionType(o -> new TranslatableText("arguments.new-friend.already_existing", o));
+    private final static DynamicCommandExceptionType FRIEND_ALREADY_EXISTING = new DynamicCommandExceptionType(o -> Text.translatable("arguments.new-friend.already_existing", o));
 
     private NewFriendArgumentType() {
     }

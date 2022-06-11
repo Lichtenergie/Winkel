@@ -10,7 +10,7 @@ import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -43,7 +43,7 @@ public class AltCommand extends Command {
                             authenticationProvider.login(session);
                             winkel.setAltSession(session);
                         } catch (AuthenticationException e) {
-                            winkel.getChat().error(new LiteralText(e.getMessage()));
+                            winkel.getChat().error(Text.literal(e.getMessage()));
                         }
                     });
                 }

@@ -2,22 +2,15 @@ package de.dietrichpaul.winkel.property.list;
 
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.arguments.FloatArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import de.dietrichpaul.winkel.feature.gui.tab.Item;
-import de.dietrichpaul.winkel.feature.gui.tab.impl.Button;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Scroll;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.util.MathUtil;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
@@ -73,7 +66,7 @@ public class FloatProperty extends AbstractProperty<Float> {
     public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
         builder.then(Command.argument("float", FloatArgumentType.floatArg(min, max)).executes(context -> {
             setValue(FloatArgumentType.getFloat(context, "float"));
-            WinkelClient.INSTANCE.getChat().print("command.property.set", new LiteralText(getName()).formatted(Formatting.GRAY), new LiteralText(getParent().asString()).formatted(Formatting.GRAY), new LiteralText("").append(getValueText()).formatted(Formatting.GRAY));
+            WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), Text.literal("").append(getValueText()).formatted(Formatting.GRAY));
             return 1;
         }));
     }
@@ -92,7 +85,7 @@ public class FloatProperty extends AbstractProperty<Float> {
 
     @Override
     public Item createTabGuiItem() {
-        Container container = new Container(() -> new LiteralText(this.getName()));
+        Container container = new Container(() -> Text.literal(this.getName()));
         container.add(new Scroll(this::getValue, this::getDivisor, this::getMin, this::getMax, this::getDecimalPrecision, this::setValue));
 
         return container;

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.util.HSBColor;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -65,23 +64,23 @@ public class ColorProperty extends AbstractProperty<HSBColor> {
         if (blueHex.length() != 2)
             blueHex = "0" + blueHex;
 
-        MutableText detail = new LiteralText("");
-        detail.append(new LiteralText("Red: " + color.getRed() + "\n")
+        MutableText detail = Text.literal("");
+        detail.append(Text.literal("Red: " + color.getRed() + "\n")
                 .formatted(Formatting.RED));
-        detail.append(new LiteralText("Green: " + color.getGreen() + "\n")
+        detail.append(Text.literal("Green: " + color.getGreen() + "\n")
                 .formatted(Formatting.GREEN));
-        detail.append(new LiteralText("Blue: " + color.getBlue() + "\n")
+        detail.append(Text.literal("Blue: " + color.getBlue() + "\n")
                 .formatted(Formatting.BLUE));
-        detail.append(new LiteralText("Alpha: " + color.getAlpha())
+        detail.append(Text.literal("Alpha: " + color.getAlpha())
                 .formatted(Formatting.GRAY));
 
-        MutableText literal = new LiteralText("#" + alphaHex + redHex + greenHex + blueHex)
+        MutableText literal = Text.literal("#" + alphaHex + redHex + greenHex + blueHex)
                 .styled(style -> style
                         .withColor(getValue().getRGB())
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, detail))
                 );
 
-        return new LiteralText("")
+        return Text.literal("")
                 .append(literal);
     }
 

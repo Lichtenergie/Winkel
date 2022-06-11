@@ -10,14 +10,14 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.SimpleSuggestionBuilder;
 import de.dietrichpaul.winkel.util.keyboard.WKey;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.concurrent.CompletableFuture;
 
 public class BoundKeyArgumentType implements ArgumentType<WKey> {
 
     public static final DynamicCommandExceptionType KEY_UNBOUND = new DynamicCommandExceptionType(
-            arg -> new TranslatableText("arguments.keyboard.unbound", arg));
+            arg -> Text.translatable("arguments.keyboard.unbound", arg));
 
     private BoundKeyArgumentType() {
     }

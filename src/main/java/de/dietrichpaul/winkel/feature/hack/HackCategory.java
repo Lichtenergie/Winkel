@@ -1,7 +1,6 @@
 package de.dietrichpaul.winkel.feature.hack;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 public enum HackCategory {
 
@@ -18,7 +17,7 @@ public enum HackCategory {
 
     HackCategory(String identifier) {
         this.identifier = identifier;
-        this.display = new TranslatableText("category." + identifier);
+        this.display = Text.translatable("category." + identifier);
     }
 
     public String getIdentifier() {

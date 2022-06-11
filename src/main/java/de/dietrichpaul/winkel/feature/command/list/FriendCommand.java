@@ -8,7 +8,7 @@ import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.friend.FriendArgumentType;
 import de.dietrichpaul.winkel.feature.command.arguments.friend.NewFriendArgumentType;
 import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class FriendCommand extends Command {
@@ -19,7 +19,7 @@ public class FriendCommand extends Command {
     private static void add(CommandContext<InternalCommandSource> context) {
         String friend = NewFriendArgumentType.getNewFriend(context, "friend");
         WinkelClient.INSTANCE.getFriendManager().addFriend(friend);
-        WinkelClient.INSTANCE.getChat().print("command.friend.add", new LiteralText(friend).formatted(Formatting.GRAY));
+        WinkelClient.INSTANCE.getChat().print("command.friend.add", Text.literal(friend).formatted(Formatting.GRAY));
     }
 
     private static void addTag(CommandContext<InternalCommandSource> context) {

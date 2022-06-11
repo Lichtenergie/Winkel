@@ -10,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientLoginNetworkHandler;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +31,8 @@ public abstract class ClientLoginNetworkHandlerMixin {
     protected abstract MinecraftSessionService getSessionService();
 
     /**
-     * @author Mojang Studios, AdvancedCode
+     * @author Mojang Studios, AdvancedCode, EnZaXD
+     * @reason Hook Alt System
      */
     @Overwrite
     private @Nullable Text joinServerSession(String serverId) {
@@ -42,14 +42,14 @@ public abstract class ClientLoginNetworkHandlerMixin {
             } else {
                 this.getSessionService().joinServer(this.client.getSession().getProfile(), this.client.getSession().getAccessToken(), serverId);
             }
-        } catch (AuthenticationUnavailableException authenticationUnavailableException) {
-            return new TranslatableText("disconnect.loginFailedInfo", new TranslatableText("disconnect.loginFailedInfo.serversUnavailable"));
-        } catch (InvalidCredentialsException authenticationUnavailableException) {
-            return new TranslatableText("disconnect.loginFailedInfo", new TranslatableText("disconnect.loginFailedInfo.invalidSession"));
-        } catch (InsufficientPrivilegesException authenticationUnavailableException) {
-            return new TranslatableText("disconnect.loginFailedInfo", new TranslatableText("disconnect.loginFailedInfo.insufficientPrivileges"));
-        } catch (AuthenticationException authenticationUnavailableException) {
-            return new TranslatableText("disconnect.loginFailedInfo", authenticationUnavailableException.getMessage());
+        } catch (AuthenticationUnavailableException var3) {
+            return Text.translatable("disconnect.loginFailedInfo", new Object[]{Text.translatable("disconnect.loginFailedInfo.serversUnavailable")});
+        } catch (InvalidCredentialsException var4) {
+            return Text.translatable("disconnect.loginFailedInfo", new Object[]{Text.translatable("disconnect.loginFailedInfo.invalidSession")});
+        } catch (InsufficientPrivilegesException var5) {
+            return Text.translatable("disconnect.loginFailedInfo", new Object[]{Text.translatable("disconnect.loginFailedInfo.insufficientPrivileges")});
+        } catch (AuthenticationException var6) {
+            return Text.translatable("disconnect.loginFailedInfo", new Object[]{var6.getMessage()});
         }
         return null;
     }
