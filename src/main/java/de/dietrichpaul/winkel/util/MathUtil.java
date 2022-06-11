@@ -10,4 +10,9 @@ public class MathUtil {
         return -value;
     }
 
+    public static float setPrecision(double x, int precision) {
+        float scalar = (int) Math.pow(10, precision);
+        return ((float) (int) Math.round(x * scalar)) / scalar;
+    }
+
 }
