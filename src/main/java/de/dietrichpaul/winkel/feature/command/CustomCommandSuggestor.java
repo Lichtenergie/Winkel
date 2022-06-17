@@ -224,7 +224,7 @@ public class CustomCommandSuggestor {
         if (string == null) {
             return text.asOrderedText();
         }
-        return new TranslatableText("command.context.parse_error", text, exception.getCursor(), string).asOrderedText();
+        return Text.translatable("command.context.parse_error", text, exception.getCursor(), string).asOrderedText();
     }
 
 
@@ -254,7 +254,7 @@ public class CustomCommandSuggestor {
             this.showUsages(Formatting.GRAY);
         }
         this.window = null;
-        if (this.windowActive && this.client.options.autoSuggestions) {
+        if (this.windowActive && this.client.options.getAutoSuggestions().getValue()) {
             this.showSuggestions(false);
         }
     }
@@ -518,9 +518,9 @@ public class CustomCommandSuggestor {
             Suggestion suggestion = this.suggestions.get(this.selection);
             Message message = suggestion.getTooltip();
             if (message != null) {
-                return new TranslatableText("narration.suggestion.tooltip", this.selection + 1, this.suggestions.size(), suggestion.getText(), message);
+                return Text.translatable("narration.suggestion.tooltip", this.selection + 1, this.suggestions.size(), suggestion.getText(), message);
             }
-            return new TranslatableText("narration.suggestion", this.selection + 1, this.suggestions.size(), suggestion.getText());
+            return Text.translatable("narration.suggestion", this.selection + 1, this.suggestions.size(), suggestion.getText());
         }
 
         public void discard() {

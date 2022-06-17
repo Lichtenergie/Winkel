@@ -44,7 +44,7 @@ public class CommandManager {
             if (e.getCursor() >= 0) {
                 int index = Math.min(e.getInput().length(), e.getCursor());
 
-                MutableText verbose = new LiteralText("")
+                MutableText verbose = Text.literal("")
                         .formatted(Formatting.GRAY)
                         .styled(style -> style
                                 .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, input.getString())));
@@ -55,10 +55,10 @@ public class CommandManager {
 
                 verbose.append(e.getInput().substring(Math.max(0, index - 10), index));
                 if (index < e.getInput().length()) {
-                    verbose.append(new LiteralText(e.getInput().substring(index))
+                    verbose.append(Text.literal(e.getInput().substring(index))
                             .formatted(Formatting.RED, Formatting.UNDERLINE));
                 }
-                verbose.append(new TranslatableText("command.context.here")
+                verbose.append(Text.translatable("command.context.here")
                         .formatted(Formatting.RED, Formatting.ITALIC));
 
                 chat.error(verbose);

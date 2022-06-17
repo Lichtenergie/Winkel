@@ -42,7 +42,7 @@ public class BooleanProperty extends AbstractProperty<Boolean> {
     public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
         builder.then(Command.argument("boolean", BoolArgumentType.bool()).executes(context -> {
             setValue(BoolArgumentType.getBool(context, "boolean"));
-            WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), new LiteralText("").append(getValueText()).formatted(Formatting.GRAY));
+            WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), Text.literal("").append(getValueText()).formatted(Formatting.GRAY));
             return 1;
         }));
     }
