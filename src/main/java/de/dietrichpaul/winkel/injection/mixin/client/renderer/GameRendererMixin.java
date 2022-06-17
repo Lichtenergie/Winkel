@@ -20,14 +20,11 @@ public class GameRendererMixin {
             cir.setReturnValue(WinkelClient.INSTANCE.getHackList().fullBright.getStrength());
     }
 
-    @Redirect(method = "getFov", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;fov:D"))
+    // TODO: Fix that
+    /*@Redirect(method = "getFov", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions;fov:D"))
     public double onGetFOV(GameOptions instance) {
-        Zoom zoom = WinkelClient.INSTANCE.getZoom();
-        zoom.updateZoomingState();
-        if (!zoom.isZooming())
-            return instance.fov;
-        return zoom.getFOV(instance.fov);
-    }
+
+    }*/
 
 
 }

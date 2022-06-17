@@ -11,6 +11,7 @@ group = project.maven_group
 
 repositories {
 	maven { url 'https://jitpack.io' }
+	mavenCentral()
 }
 
 dependencies {
@@ -21,6 +22,9 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	implementation 'com.github.Vatuu:discord-rpc:1.6.2'
+
+	implementation('ca.weblite:java-objc-bridge:1.2')
+
 }
 
 processResources {

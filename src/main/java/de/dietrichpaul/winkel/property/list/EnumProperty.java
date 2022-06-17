@@ -34,7 +34,7 @@ public class EnumProperty<T extends Enum<T> & EnumIdentifiable> extends Abstract
     public void makeCommand(SimpleArgumentBuilder<InternalCommandSource, ?> builder) {
         builder.then(Command.argument("enum", EnumArgument.enumArgument(this.values)).executes(context -> {
             setValue(EnumArgument.getEnumConstant(context, "enum"));
-            WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), new LiteralText("").append(getValueText()).formatted(Formatting.GRAY));
+            WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), Text.literal("").append(getValueText()).formatted(Formatting.GRAY));
             return 1;
         }));
     }

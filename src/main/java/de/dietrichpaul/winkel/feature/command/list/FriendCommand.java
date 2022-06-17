@@ -26,13 +26,13 @@ public class FriendCommand extends Command {
         String friend = NewFriendArgumentType.getNewFriend(context, "friend");
         String tag = StringArgumentType.getString(context, "tag");
         WinkelClient.INSTANCE.getFriendManager().addFriend(friend);
-        WinkelClient.INSTANCE.getChat().print("command.friend.add_tag", new LiteralText(friend).formatted(Formatting.GRAY), new LiteralText(tag).formatted(Formatting.GRAY));
+        WinkelClient.INSTANCE.getChat().print("command.friend.add_tag", Text.literal(friend).formatted(Formatting.GRAY), Text.literal(tag).formatted(Formatting.GRAY));
     }
 
     private static void remove(CommandContext<InternalCommandSource> context) {
         String friend = NewFriendArgumentType.getNewFriend(context, "friend");
         WinkelClient.INSTANCE.getFriendManager().removeFriend(friend);
-        WinkelClient.INSTANCE.getChat().print("command.friend.remove", new LiteralText(friend).formatted(Formatting.GRAY));
+        WinkelClient.INSTANCE.getChat().print("command.friend.remove", Text.literal(friend).formatted(Formatting.GRAY));
     }
 
     @Override
