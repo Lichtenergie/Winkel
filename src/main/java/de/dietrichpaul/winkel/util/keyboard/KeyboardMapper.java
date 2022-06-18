@@ -44,7 +44,7 @@ public class KeyboardMapper {
                 int id = field.getInt(null);
                 if (id == -1) continue;
                 int scan = GLFW.glfwGetKeyScancode(id);
-                if (id == GLFW.GLFW_KEY_UNKNOWN)
+                if (scan == GLFW.GLFW_KEY_UNKNOWN)
                     continue;
                 String name = GLFW.glfwGetKeyName(id, scan);
                 if (name == null) {

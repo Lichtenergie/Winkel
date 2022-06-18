@@ -2,6 +2,7 @@ package de.dietrichpaul.winkel.injection.mixin.client;
 
 import ca.weblite.objc.Client;
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.list.GameTickListener;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
@@ -45,6 +46,11 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
 
     @Mutable
     @Shadow @Final private Session session;
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void onTick(CallbackInfo ci) {
+        WinkelClient.INSTANCE.getEventDispatcher().post(GameTickListener.GameTickEvent.INSTANCE);
+    }
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setFramerateLimit(I)V", shift = At.Shift.BEFORE))
     public void onInit(RunArgs args, CallbackInfo ci) {

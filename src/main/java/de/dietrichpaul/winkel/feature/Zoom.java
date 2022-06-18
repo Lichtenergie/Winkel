@@ -1,21 +1,23 @@
 package de.dietrichpaul.winkel.feature;
 
+import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.list.GameTickListener;
+import de.dietrichpaul.winkel.util.MathUtil;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.glfw.GLFW;
 
-public class Zoom {
+public class Zoom implements GameTickListener {
 
     public static final double RESET_DIVISOR = 3;
-
+    private final KeyBinding keyBinding;
     private boolean zooming;
     private boolean prevZooming;
-
-    private double divisor = RESET_DIVISOR;
-
-    private final KeyBinding keyBinding;
+    private double targetDivisor = RESET_DIVISOR;
+    private double divisor = targetDivisor;
+    private double prevDivisor;
 
     public Zoom() {
         this.keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -24,14 +26,17 @@ public class Zoom {
                 GLFW.GLFW_KEY_C,
                 "category.winkel"
         ));
+        WinkelClient.INSTANCE.getEventDispatcher().subscribe(GameTickListener.class, this);
     }
 
-    public double getFOV(double prev) {
-        return prev / divisor;
+    public double getFOV(float partials, double prev) {
+        double interpolatedDivisor = MathHelper.lerp(partials, this.prevDivisor, this.divisor);
+        System.out.println(interpolatedDivisor);
+        return prev / interpolatedDivisor;
     }
 
     public void scroll(double offset) {
-        this.divisor = MathHelper.clamp(this.divisor + offset * 0.25, 1, 50);
+        this.targetDivisor = MathHelper.clamp(this.targetDivisor + offset * 0.25, 1, 10);
     }
 
     public boolean isZooming() {
@@ -41,9 +46,22 @@ public class Zoom {
     public void updateZoomingState() {
         this.zooming = this.keyBinding.isPressed();
         if (this.zooming && !this.prevZooming) {
-            this.divisor = RESET_DIVISOR;
+            this.targetDivisor = RESET_DIVISOR;
         }
         this.prevZooming = this.zooming;
+    }
+
+    @Override
+    public void onTick() {
+        if (!isZooming()) {
+            targetDivisor = 1;
+        }
+        this.prevDivisor = this.divisor;
+        if (targetDivisor > this.divisor && Math.abs(this.targetDivisor - this.divisor) > 0.75) {
+            this.divisor = MathUtil.limitChange(this.divisor, this.targetDivisor, 0.75);
+        } else {
+            this.divisor = MathHelper.lerp(0.75, this.divisor, this.targetDivisor);
+        }
     }
 
 }
