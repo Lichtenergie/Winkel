@@ -55,12 +55,12 @@ public class TargetSelectionProperty extends AbstractProperty<List<TargetFilter>
         addFilter(new TargetFilter("Armor Stands", "armorStands", "Would select players", (mc, e) -> !(e instanceof ArmorStandEntity)));
         addFilter(new TargetFilter("EndCrystals", "endCrystals", "Would select players", (mc, e) -> !(e instanceof EndCrystalEntity)));
         addFilter(new TargetFilter("Fireballs", "fireballs", "Would select players", (mc, e) -> !(e instanceof FireballEntity)));
-        /*addFilter(new TargetFilter("Friends", "friends", "Would select players", (mc, e) -> {
+        addFilter(new TargetFilter("Friends", "friends", "Would select players", (mc, e) -> {
             if (e instanceof OtherClientPlayerEntity) {
-                return !Axiom.getInstance(mc).getFriendManager().isFriend(e);
+                return !WinkelClient.INSTANCE.getFriendManager().isFriend(e);
             }
             return true;
-        }));*/
+        }));
         addFilter(new TargetFilter("Team mates", "teamMates", "Would select players", (mc, e) -> {
             PlayerListEntry myTab = mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid());
             if (myTab != null) {
