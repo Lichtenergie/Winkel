@@ -31,7 +31,6 @@ public class Zoom implements GameTickListener {
 
     public double getFOV(float partials, double prev) {
         double interpolatedDivisor = MathHelper.lerp(partials, this.prevDivisor, this.divisor);
-        System.out.println(interpolatedDivisor);
         return prev / interpolatedDivisor;
     }
 
