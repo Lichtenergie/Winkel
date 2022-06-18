@@ -35,7 +35,7 @@ public class Zoom implements GameTickListener {
     }
 
     public void scroll(double offset) {
-        this.targetDivisor = MathHelper.clamp(this.targetDivisor + offset * 0.25, 1, 10);
+        this.targetDivisor = MathHelper.clamp(this.targetDivisor + offset * 0.25, 1, 30);
     }
 
     public boolean isZooming() {
