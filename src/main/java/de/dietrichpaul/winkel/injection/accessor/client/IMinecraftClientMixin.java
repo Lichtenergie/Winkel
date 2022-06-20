@@ -12,4 +12,6 @@ public interface IMinecraftClientMixin {
 
     void setSession(Session session);
 
+    int getFPS();
+
 }

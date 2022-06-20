@@ -9,6 +9,10 @@ import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.target.TargetSelectionAddArgumentType;
 import de.dietrichpaul.winkel.feature.command.arguments.target.TargetSelectionRemoveArgumentType;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
+import de.dietrichpaul.winkel.feature.gui.tab.Item;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Checkbox;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Radio;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.OtherClientPlayerEntity;
@@ -154,6 +158,26 @@ public class TargetSelectionProperty extends AbstractProperty<List<TargetFilter>
 
     public <E extends Entity> Stream<E> filter(MinecraftClient client, Stream<E> stream) {
         return stream.filter(predicate(client));
+    }
+
+    @Override
+    public Item createTabGuiItem() {
+        Container container = new Container(() -> Text.literal(this.getName()));
+        for (TargetFilter filter : targetFilters.values()) {
+            container.add(new Checkbox(() -> {
+                return Text.literal(filter.name());
+            }, () -> {
+                return this.getValue().contains(filter);
+            }, () -> {
+                if (this.getValue().contains(filter)) {
+                    this.getValue().remove(filter);
+                } else {
+                    this.getValue().add(filter);
+                }
+            }));
+        }
+
+        return container;
     }
 
 }

@@ -1,7 +1,11 @@
 package de.dietrichpaul.winkel.feature.hack;
 
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.EventDispatcher;
+import de.dietrichpaul.winkel.property.AbstractProperty;
+import de.dietrichpaul.winkel.property.PropertyMap;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -15,6 +19,7 @@ public class Hack implements StringIdentifiable {
 
     protected MinecraftClient client = MinecraftClient.getInstance();
     protected WinkelClient winkel = WinkelClient.INSTANCE;
+    protected EventDispatcher events = winkel.getEventDispatcher();
 
     private boolean enabled;
 
@@ -28,6 +33,13 @@ public class Hack implements StringIdentifiable {
     }
 
     protected void onDisable() {
+    }
+
+    protected void addProperty(PropertyMap map, AbstractProperty<?> property) {
+        map.register(this, property);
+    }
+
+    protected void makeProperties(PropertyMap map) {
     }
 
     public void toggle() {

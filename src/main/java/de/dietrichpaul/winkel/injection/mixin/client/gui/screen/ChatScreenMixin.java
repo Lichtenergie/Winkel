@@ -36,7 +36,7 @@ public abstract class ChatScreenMixin extends Screen {
         assert client != null;
         ChatListener.ChatEvent event = new ChatListener.ChatEvent(chatText, client.inGameHud.getChatHud());
         WinkelClient.INSTANCE.getEventDispatcher().post(event);
-        if (!event.isCancelled())
+        if (event.isCancelled())
             callback.cancel();
     }
 

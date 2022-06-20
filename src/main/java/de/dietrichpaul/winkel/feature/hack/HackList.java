@@ -1,9 +1,11 @@
 package de.dietrichpaul.winkel.feature.hack;
 
-import de.dietrichpaul.winkel.feature.hack.block.FastPlaceHack;
-import de.dietrichpaul.winkel.feature.hack.movement.*;
-import de.dietrichpaul.winkel.feature.hack.visual.FullBrightHack;
-import de.dietrichpaul.winkel.feature.hack.visual.HudHack;
+import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.feature.hack.impl.block.FastPlaceHack;
+import de.dietrichpaul.winkel.feature.hack.impl.combat.AimbotHack;
+import de.dietrichpaul.winkel.feature.hack.impl.movement.*;
+import de.dietrichpaul.winkel.feature.hack.impl.visual.FullBrightHack;
+import de.dietrichpaul.winkel.feature.hack.impl.visual.HudHack;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -16,6 +18,9 @@ public class HackList {
 
     // Block
     public FastPlaceHack fastPlace = new FastPlaceHack();
+
+    // Combat
+    public AimbotHack killAura = new AimbotHack();
 
     // Movement
     public JetpackHack jetpackHack = new JetpackHack();
@@ -42,6 +47,7 @@ public class HackList {
 
     public void addHack(Hack hack) {
         this.hacks.put(hack.getName(), hack);
+        hack.makeProperties(WinkelClient.INSTANCE.getPropertyMap());
     }
 
     public Hack getHack(String name) {

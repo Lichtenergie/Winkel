@@ -3,13 +3,19 @@ package de.dietrichpaul.winkel.injection.mixin.client;
 import ca.weblite.objc.Client;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.list.GameTickListener;
+import de.dietrichpaul.winkel.event.list.raytrace.PostRayTraceListener;
+import de.dietrichpaul.winkel.event.list.raytrace.PreRayTraceListener;
+import de.dietrichpaul.winkel.event.list.tick.hud.PostTickHudListener;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.ClientBuiltinResourcePackProvider;
 import net.minecraft.client.util.Session;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.resource.ResourceManager;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -47,9 +53,39 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
     @Mutable
     @Shadow @Final private Session session;
 
+    @Shadow @Nullable public ClientPlayerEntity player;
+
+    @Shadow @Nullable public ClientWorld world;
+
+    @Shadow private static int currentFps;
+
     @Inject(method = "tick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
         WinkelClient.INSTANCE.getEventDispatcher().post(GameTickListener.GameTickEvent.INSTANCE);
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;updateTargetedEntity(F)V", shift = At.Shift.BEFORE))
+    public void onPreRayTrace(CallbackInfo ci) {
+        if (player == null || world == null || player.world == null)
+            return;
+        WinkelClient.INSTANCE.getEventDispatcher().post(PreRayTraceListener.PreRayTraceEvent.INSTANCE);
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;updateTargetedEntity(F)V", shift = At.Shift.AFTER))
+    public void onPostRayTrace(CallbackInfo ci) {
+        if (player == null || world == null || player.world == null)
+            return;
+        WinkelClient.INSTANCE.getEventDispatcher().post(new PostRayTraceListener.PostRayTraceEvent());
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;tick(Z)V", shift = At.Shift.AFTER))
+    public void onPostHudTick(CallbackInfo ci) {
+        WinkelClient.INSTANCE.getEventDispatcher().post(PostTickHudListener.PostTickHudEvent.INSTANCE);
+    }
+
+    @Override
+    public int getFPS() {
+        return currentFps;
     }
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setFramerateLimit(I)V", shift = At.Shift.BEFORE))

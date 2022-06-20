@@ -6,6 +6,10 @@ import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.arguments.EnumArgument;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
+import de.dietrichpaul.winkel.feature.gui.tab.Item;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Radio;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Scroll;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.util.EnumIdentifiable;
 import net.minecraft.text.Text;
@@ -52,6 +56,22 @@ public class EnumProperty<T extends Enum<T> & EnumIdentifiable> extends Abstract
     @Override
     public void writeToJson(JsonObject element) {
         element.addProperty("enum", getValue().name());
+    }
+
+    @Override
+    public Item createTabGuiItem() {
+        Container container = new Container(() -> Text.literal(this.getName()));
+        for (T t : this.values) {
+            container.add(new Radio(() -> {
+                return Text.literal(t.getDisplay());
+            }, () -> {
+                return this.getValue() == t;
+            }, () -> {
+                setValue(t);
+            }));
+        }
+
+        return container;
     }
 
 }

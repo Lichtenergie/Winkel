@@ -6,14 +6,21 @@
   "client": [
     "client.KeyboardMixin",
     "client.MinecraftClientMixin",
+    "client.MouseMixin",
     "client.gui.hud.InGameHudMixin",
     "client.gui.screen.ChatScreenMixin",
     "client.gui.screen.CommandSuggestorMixin",
+    "client.input.KeyboardInputMixin",
+    "client.network.ClientLoginNetworkHandlerMixin",
     "client.network.ClientPlayerEntityMixin",
+    "client.network.ClientPlayNetworkHandlerMixin",
+    "client.renderer.CameraMixin",
     "client.renderer.GameRendererMixin",
+    "client.renderer.entity.LivingEntityRendererMixin",
     "item.MiningToolItemMixin",
-    "client.MouseMixin",
-    "client.network.ClientLoginNetworkHandlerMixin"
+    "entity.EntityMixin",
+    "entity.LivingEntityMixin",
+    "entity.PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

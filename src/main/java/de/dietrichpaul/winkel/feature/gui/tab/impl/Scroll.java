@@ -17,17 +17,17 @@ import java.util.function.Supplier;
 
 public class Scroll extends Item {
 
-    private Supplier<Float> valueSupplier;
-    private Supplier<Float> incrementSupplier;
-    private Supplier<Float> minSupplier;
-    private Supplier<Float> maxSupplier;
+    private Supplier<Number> valueSupplier;
+    private Supplier<Number> incrementSupplier;
+    private Supplier<Number> minSupplier;
+    private Supplier<Number> maxSupplier;
     private Supplier<Integer> decimalPrecisionSupplier;
     private Consumer<Float> valueApplier;
 
     private DecimalFormat floatFormat;
     private int formatPrecision = -1;
 
-    public Scroll(Supplier<Float> valueSupplier, Supplier<Float> incrementSupplier, Supplier<Float> minSupplier, Supplier<Float> maxSupplier, Supplier<Integer> decimalPrecisionSupplier, Consumer<Float> valueApplier) {
+    public Scroll(Supplier<Number> valueSupplier, Supplier<Number> incrementSupplier, Supplier<Number> minSupplier, Supplier<Number> maxSupplier, Supplier<Integer> decimalPrecisionSupplier, Consumer<Float> valueApplier) {
         this.valueSupplier = valueSupplier;
         this.incrementSupplier = incrementSupplier;
         this.minSupplier = minSupplier;
@@ -39,12 +39,13 @@ public class Scroll extends Item {
     private Text getText() {
         int precision = this.decimalPrecisionSupplier.get();
         if (precision != this.formatPrecision) {
-            this.floatFormat = new DecimalFormat("0." + "0".repeat(precision));
+            String base = precision == 0 ? "0" : "0.";
+            this.floatFormat = new DecimalFormat(base + "0".repeat(precision));
             this.formatPrecision = precision;
         }
-        float value = this.valueSupplier.get();
-        float min = this.minSupplier.get();
-        float max = this.maxSupplier.get();
+        float value = this.valueSupplier.get().floatValue();
+        float min = this.minSupplier.get().floatValue();
+        float max = this.maxSupplier.get().floatValue();
 
         MutableText valueText = Text.literal(floatFormat.format(value));
 
@@ -90,10 +91,10 @@ public class Scroll extends Item {
         if (key != GLFW.GLFW_KEY_DOWN && key != GLFW.GLFW_KEY_UP)
             return false;
         int direction = key == GLFW.GLFW_KEY_DOWN ? -1 : 1;
-        float value = this.valueSupplier.get();
-        float increment = this.incrementSupplier.get();
-        float min = this.minSupplier.get();
-        float max = this.maxSupplier.get();
+        float value = this.valueSupplier.get().floatValue();
+        float increment = this.incrementSupplier.get().floatValue();
+        float min = this.minSupplier.get().floatValue();
+        float max = this.maxSupplier.get().floatValue();
         int precision = this.decimalPrecisionSupplier.get();
         System.out.println(precision);
         this.valueApplier.accept(MathUtil.setPrecision(MathHelper.clamp(value + increment * direction, min, max), precision));

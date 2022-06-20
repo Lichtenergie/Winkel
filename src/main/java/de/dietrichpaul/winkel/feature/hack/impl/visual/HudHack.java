@@ -1,4 +1,4 @@
-package de.dietrichpaul.winkel.feature.hack.visual;
+package de.dietrichpaul.winkel.feature.hack.impl.visual;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.dietrichpaul.winkel.WinkelClient;

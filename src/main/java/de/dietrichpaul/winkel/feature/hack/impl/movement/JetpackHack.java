@@ -1,4 +1,4 @@
-package de.dietrichpaul.winkel.feature.hack.movement;
+package de.dietrichpaul.winkel.feature.hack.impl.movement;
 
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.list.UpdateListener;

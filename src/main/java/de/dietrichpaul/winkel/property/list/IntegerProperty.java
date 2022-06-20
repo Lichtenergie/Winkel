@@ -6,6 +6,9 @@ import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.Command;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
+import de.dietrichpaul.winkel.feature.gui.tab.Item;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
+import de.dietrichpaul.winkel.feature.gui.tab.impl.Scroll;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -49,6 +52,22 @@ public class IntegerProperty extends AbstractProperty<Integer> {
             WinkelClient.INSTANCE.getChat().print("command.property.set", Text.literal(getName()).formatted(Formatting.GRAY), Text.literal(getParent().asString()).formatted(Formatting.GRAY), Text.literal("").append(getValueText()).formatted(Formatting.GRAY));
             return 1;
         }));
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    @Override
+    public Item createTabGuiItem() {
+        Container container = new Container(() -> Text.literal(this.getName()));
+        container.add(new Scroll(this::getValue, () -> 1, this::getMin, this::getMax, () -> 0, n -> setValue(n.intValue())));
+
+        return container;
     }
 
 }

@@ -1,4 +1,4 @@
-package de.dietrichpaul.winkel.feature.hack.visual;
+package de.dietrichpaul.winkel.feature.hack.impl.visual;
 
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;

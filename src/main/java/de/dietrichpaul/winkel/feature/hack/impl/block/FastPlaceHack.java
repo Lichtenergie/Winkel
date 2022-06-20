@@ -1,13 +1,14 @@
-package de.dietrichpaul.winkel.feature.hack.movement;
+package de.dietrichpaul.winkel.feature.hack.impl.block;
 
 import de.dietrichpaul.winkel.event.list.UpdateListener;
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
+import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 
-public class StepHack extends Hack implements UpdateListener {
+public class FastPlaceHack extends Hack implements UpdateListener {
 
-    public StepHack() {
-        super("Step", "bro", HackCategory.MOVEMENT);
+    public FastPlaceHack() {
+        super("FastPlace", "", HackCategory.BLOCK);
     }
 
     @Override
@@ -18,12 +19,11 @@ public class StepHack extends Hack implements UpdateListener {
     @Override
     protected void onDisable() {
         winkel.getEventDispatcher().unsubscribe(UpdateListener.class, this);
-        client.player.stepHeight = 0.6F;
     }
 
     @Override
     public void onUpdate() {
-        client.player.stepHeight = 1F;
+        ((IMinecraftClientMixin) client).setItemUseCooldown(0);
     }
 
 }
