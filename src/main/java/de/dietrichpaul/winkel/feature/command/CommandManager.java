@@ -25,6 +25,7 @@ public class CommandManager {
         this.commandListener = new CommandListener(this);
         this.commandListener.register(WinkelClient.INSTANCE.getEventDispatcher());
         this.addCommand(new AltCommand());
+        this.addCommand(new ClickPatternCommand());
         this.addCommand(new FriendCommand());
         this.addCommand(new MacroCommand());
         this.addCommand(new PropertyCommand());

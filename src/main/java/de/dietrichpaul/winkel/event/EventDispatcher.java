@@ -1,6 +1,6 @@
 package de.dietrichpaul.winkel.event;
 
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

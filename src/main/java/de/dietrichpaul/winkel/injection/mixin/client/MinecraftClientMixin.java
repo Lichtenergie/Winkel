@@ -2,7 +2,9 @@ package de.dietrichpaul.winkel.injection.mixin.client;
 
 import ca.weblite.objc.Client;
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.list.DoAttackListener;
 import de.dietrichpaul.winkel.event.list.GameTickListener;
+import de.dietrichpaul.winkel.event.list.InputHandleListener;
 import de.dietrichpaul.winkel.event.list.raytrace.PostRayTraceListener;
 import de.dietrichpaul.winkel.event.list.raytrace.PreRayTraceListener;
 import de.dietrichpaul.winkel.event.list.tick.hud.PostTickHudListener;
@@ -24,6 +26,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,9 +86,19 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
         WinkelClient.INSTANCE.getEventDispatcher().post(PostTickHudListener.PostTickHudEvent.INSTANCE);
     }
 
+    @Inject(method = "doAttack", at = @At("HEAD"))
+    public void onDoAttack(CallbackInfoReturnable<Boolean> cir) {
+        WinkelClient.INSTANCE.getEventDispatcher().post(DoAttackListener.DoAttackEvent.INSTANCE);
+    }
+
     @Override
     public int getFPS() {
         return currentFps;
+    }
+
+    @Inject(method = "handleInputEvents", at = @At("HEAD"))
+    public void onHandleInputEvents(CallbackInfo ci) {
+        WinkelClient.INSTANCE.getEventDispatcher().post(InputHandleListener.InputHandleEvent.INSTANCE);
     }
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setFramerateLimit(I)V", shift = At.Shift.BEFORE))

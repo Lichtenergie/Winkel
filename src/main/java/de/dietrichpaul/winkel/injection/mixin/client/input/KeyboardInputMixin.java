@@ -22,7 +22,7 @@ public class KeyboardInputMixin extends Input {
     @Inject(method = "tick", at = @At("RETURN"))
     public void tick(boolean slowDown, float slowness, CallbackInfo ci) {
         StrafeInputEmulationListener.StrafeInputEmulationEvent event
-                = new StrafeInputEmulationListener.StrafeInputEmulationEvent(this.movementSideways, this.movementForward, slowDown, slowness);
+                = new StrafeInputEmulationListener.StrafeInputEmulationEvent(Math.signum(this.movementSideways), Math.signum(this.movementForward), slowDown, slowness);
         WinkelClient.INSTANCE.getEventDispatcher().post(event);
 
         this.movementSideways = event.getMovementSideways();

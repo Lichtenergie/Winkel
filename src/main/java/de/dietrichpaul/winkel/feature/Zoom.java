@@ -2,7 +2,7 @@ package de.dietrichpaul.winkel.feature;
 
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.list.GameTickListener;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;

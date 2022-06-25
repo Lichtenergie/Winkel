@@ -6,7 +6,7 @@ import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.property.list.BooleanProperty;
 import de.dietrichpaul.winkel.property.list.EnumProperty;
 import de.dietrichpaul.winkel.property.list.IntegerProperty;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import de.dietrichpaul.winkel.util.raytrace.RayTraceUtil;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;

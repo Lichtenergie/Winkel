@@ -1,6 +1,6 @@
 package de.dietrichpaul.winkel.util.priority.killaura.algorithm;
 
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import de.dietrichpaul.winkel.util.priority.killaura.TargetSortingAlgorithm;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;

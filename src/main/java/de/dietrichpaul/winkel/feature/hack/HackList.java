@@ -3,9 +3,12 @@ package de.dietrichpaul.winkel.feature.hack;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.hack.impl.block.FastPlaceHack;
 import de.dietrichpaul.winkel.feature.hack.impl.combat.AimbotHack;
+import de.dietrichpaul.winkel.feature.hack.impl.combat.KillauraHack;
+import de.dietrichpaul.winkel.feature.hack.impl.fun.HealthSpoofHack;
 import de.dietrichpaul.winkel.feature.hack.impl.movement.*;
 import de.dietrichpaul.winkel.feature.hack.impl.visual.FullBrightHack;
 import de.dietrichpaul.winkel.feature.hack.impl.visual.HudHack;
+import org.checkerframework.checker.units.qual.K;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -20,7 +23,11 @@ public class HackList {
     public FastPlaceHack fastPlace = new FastPlaceHack();
 
     // Combat
-    public AimbotHack killAura = new AimbotHack();
+    public AimbotHack aimbot = new AimbotHack();
+    public KillauraHack killaura = new KillauraHack();
+
+    // Fun
+    public HealthSpoofHack healthSpoof = new HealthSpoofHack();
 
     // Movement
     public JetpackHack jetpackHack = new JetpackHack();

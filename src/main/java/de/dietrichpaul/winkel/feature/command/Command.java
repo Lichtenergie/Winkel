@@ -4,6 +4,8 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import de.dietrichpaul.winkel.WinkelClient;
+import de.dietrichpaul.winkel.event.EventDispatcher;
+import de.dietrichpaul.winkel.feature.Chat;
 import de.dietrichpaul.winkel.feature.command.node.SimpleBaseArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.node.SimpleLiteralArgumentBuilder;
 import de.dietrichpaul.winkel.feature.command.node.SimpleRequiredArgumentBuilder;
@@ -14,6 +16,8 @@ public abstract class Command {
 
     protected WinkelClient winkel = WinkelClient.INSTANCE;
     protected MinecraftClient client = MinecraftClient.getInstance();
+    protected EventDispatcher events = winkel.getEventDispatcher();
+    protected Chat chat = winkel.getChat();
 
     public Command(String name, String... aliases) {
         this.aliases = new String[aliases.length + 1];

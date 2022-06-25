@@ -3,7 +3,7 @@ package de.dietrichpaul.winkel.feature.hack.impl.combat;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 import de.dietrichpaul.winkel.feature.hack.engine.rotation.EntityAimbot;
 import de.dietrichpaul.winkel.property.list.FloatProperty;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import de.dietrichpaul.winkel.util.raytrace.RayTraceUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.hit.EntityHitResult;
@@ -16,6 +16,10 @@ public class AimbotHack extends EntityAimbot {
 
     public AimbotHack() {
         super("Aimbot", "", HackCategory.COMBAT);
+    }
+
+    public AimbotHack(String name, String description, HackCategory category) {
+        super(name, description, category);
     }
 
     private FloatProperty rangeProperty = new FloatProperty("Range", "range", "", 3, 1, 12, 0.05F);
@@ -90,7 +94,10 @@ public class AimbotHack extends EntityAimbot {
     @Override
     public void tickEngine(float[] previous, float[] decelerate, float[] rotations) {
         Vec3d camera = client.player.getCameraPosVec(1.0F);
-        MathUtil.getRotations(rotations, camera, this.target.getCameraPosVec(1.0F));
+        Vec3d hitVec = MathUtil.clampAABB(this.target.getBoundingBox().expand(this.target.getTargetingMargin()), camera);
+        MathUtil.getRotations(rotations, camera, hitVec);
+        rotations[1] += Math.random() * 5 - 3;
+        rotations[0] += Math.random() * 5 - 3;
     }
 
 }

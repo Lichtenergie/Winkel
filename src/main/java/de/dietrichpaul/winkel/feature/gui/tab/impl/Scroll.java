@@ -1,7 +1,7 @@
 package de.dietrichpaul.winkel.feature.gui.tab.impl;
 
 import de.dietrichpaul.winkel.feature.gui.tab.Item;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -96,7 +96,6 @@ public class Scroll extends Item {
         float min = this.minSupplier.get().floatValue();
         float max = this.maxSupplier.get().floatValue();
         int precision = this.decimalPrecisionSupplier.get();
-        System.out.println(precision);
         this.valueApplier.accept(MathUtil.setPrecision(MathHelper.clamp(value + increment * direction, min, max), precision));
         return true;
     }

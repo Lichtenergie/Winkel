@@ -42,6 +42,10 @@ public class Hack implements StringIdentifiable {
     protected void makeProperties(PropertyMap map) {
     }
 
+    protected boolean isGameFocused() {
+        return client.player != null && client.currentScreen == null;
+    }
+
     public void toggle() {
         this.setEnabled(!this.isEnabled());
     }

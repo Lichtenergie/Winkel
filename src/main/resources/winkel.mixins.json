@@ -14,13 +14,14 @@
     "client.network.ClientLoginNetworkHandlerMixin",
     "client.network.ClientPlayerEntityMixin",
     "client.network.ClientPlayNetworkHandlerMixin",
+    "client.option.KeyBindingMixin",
     "client.renderer.CameraMixin",
     "client.renderer.GameRendererMixin",
     "client.renderer.entity.LivingEntityRendererMixin",
-    "item.MiningToolItemMixin",
     "entity.EntityMixin",
     "entity.LivingEntityMixin",
-    "entity.PlayerEntityMixin"
+    "entity.PlayerEntityMixin",
+    "item.MiningToolItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

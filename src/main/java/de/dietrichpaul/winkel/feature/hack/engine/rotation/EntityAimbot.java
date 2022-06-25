@@ -7,7 +7,7 @@ import de.dietrichpaul.winkel.property.list.EnumProperty;
 import de.dietrichpaul.winkel.property.list.IntegerProperty;
 import de.dietrichpaul.winkel.property.list.target.TargetSelectionProperty;
 import de.dietrichpaul.winkel.util.EnumIdentifiable;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import de.dietrichpaul.winkel.util.priority.killaura.KillAuraPriorityMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

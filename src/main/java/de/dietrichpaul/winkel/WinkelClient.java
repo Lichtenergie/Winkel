@@ -1,6 +1,5 @@
 package de.dietrichpaul.winkel;
 
-import com.mojang.authlib.exceptions.AuthenticationException;
 import de.dietrichpaul.winkel.event.EventDispatcher;
 import de.dietrichpaul.winkel.feature.Chat;
 import de.dietrichpaul.winkel.feature.FriendManager;
@@ -9,16 +8,16 @@ import de.dietrichpaul.winkel.feature.Zoom;
 import de.dietrichpaul.winkel.feature.alt.AltSession;
 import de.dietrichpaul.winkel.feature.alt.AuthenticationProviderMap;
 import de.dietrichpaul.winkel.feature.alt.SessionAdapter;
-import de.dietrichpaul.winkel.feature.alt.easymc.EasyMCAuthenticationProvider;
 import de.dietrichpaul.winkel.feature.command.CommandManager;
 import de.dietrichpaul.winkel.feature.hack.HackList;
+import de.dietrichpaul.winkel.feature.hack.engine.click.ClickEngine;
+import de.dietrichpaul.winkel.feature.pattern.click.ClickPatternMap;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.util.keyboard.KeyboardMapper;
 import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
-import java.util.Collections;
 
 public class WinkelClient {
 
@@ -35,8 +34,10 @@ public class WinkelClient {
     private MacroList macroList;
     private PropertyMap propertyMap;
     private Chat chat;
+    private ClickPatternMap clickPatternMap;
     private Zoom zoom;
     private AuthenticationProviderMap authenticationProviderMap;
+    private ClickEngine clickEngine;
 
     private File directory;
 
@@ -44,7 +45,10 @@ public class WinkelClient {
 
     public void init() {
         this.directory = new File(MinecraftClient.getInstance().runDirectory, "Winkel");
+        if (!this.directory.isDirectory())
+            this.directory.mkdir();
         this.propertyMap = new PropertyMap();
+        this.clickPatternMap = new ClickPatternMap();
         this.chat = new Chat();
         this.authenticationProviderMap = new AuthenticationProviderMap();
         this.eventDispatcher = new EventDispatcher();
@@ -54,6 +58,7 @@ public class WinkelClient {
         this.friendManager = new FriendManager();
         this.macroList = new MacroList();
         this.zoom = new Zoom();
+        this.clickEngine = new ClickEngine();
     }
 
     public void start() {
@@ -109,6 +114,18 @@ public class WinkelClient {
 
     public PropertyMap getPropertyMap() {
         return propertyMap;
+    }
+
+    public File getDirectory() {
+        return directory;
+    }
+
+    public ClickEngine getClickEngine() {
+        return clickEngine;
+    }
+
+    public ClickPatternMap getClickPatternMap() {
+        return clickPatternMap;
     }
 
 }

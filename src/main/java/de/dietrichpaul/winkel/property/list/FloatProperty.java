@@ -10,7 +10,7 @@ import de.dietrichpaul.winkel.feature.gui.tab.Item;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Container;
 import de.dietrichpaul.winkel.feature.gui.tab.impl.Scroll;
 import de.dietrichpaul.winkel.property.AbstractProperty;
-import de.dietrichpaul.winkel.util.MathUtil;
+import de.dietrichpaul.winkel.util.math.MathUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;

@@ -232,6 +232,7 @@ public abstract class AbstractRotationSpoof extends Hack
         if (this.rotating) {
             client.crosshairTarget = rayTrace(this.rotations);
         }
+        this.postTickEngine();
     }
 
     @Override
@@ -338,6 +339,9 @@ public abstract class AbstractRotationSpoof extends Hack
             }
         }
         return false;
+    }
+
+    protected void postTickEngine() {
     }
 
     public abstract HitResult rayTrace(float[] curr);

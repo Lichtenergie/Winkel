@@ -1,4 +1,4 @@
-package de.dietrichpaul.winkel.util;
+package de.dietrichpaul.winkel.util.math;
 
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -7,6 +7,57 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Random;
 
 public class MathUtil {
+
+    public static double getWeightedRandom(Random random, MathFunction weight) {
+        return MathHelper.clamp(weight.f(random.nextDouble()), 0.0, 1.0);
+    }
+
+    public static void shuffle(Random random, MathFunction weight, int[] arr) {
+        for (int i = 0; i < MathHelper.ceil(random.nextDouble(arr.length / 8.0, arr.length / 6.0)); i++) {
+            int a = MathHelper.floor(getWeightedRandom(random, weight)* arr.length) ;
+            int b = MathHelper.floor(getWeightedRandom(random, weight)* arr.length) ;
+
+            if (a == b)
+                continue;
+
+            int temp = arr[b];
+            arr[b] = arr[a];
+            arr[a] = temp;
+        }
+    }
+
+    public static void offset(int[] arr, int offset) {
+        int[] temp = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            int modulo = (i + offset) % arr.length;
+            if (modulo < 0) {
+                modulo = arr.length + modulo;
+            }
+            temp[modulo] = arr[i];
+        }
+        System.arraycopy(temp, 0, arr, 0, arr.length);
+    }
+
+    public static int sum(int[] arr) {
+        int sum = 0;
+        for (int i : arr) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static double getMedian(int[] arr) {
+        return sum(arr) / (double) arr.length;
+    }
+
+    public static double getSTD(int[] arr) {
+        double median = getMedian(arr);
+        double std = 0;
+        for (int i : arr) {
+            std += MathHelper.square(i - median);
+        }
+        return Math.sqrt(std / arr.length);
+    }
 
     public static int conjugate(int value) {
         if (value == Integer.MIN_VALUE)
@@ -123,6 +174,8 @@ public class MathUtil {
     }
 
     public static int nextInt(Random random, int min, int max) {
+        if (min == max)
+            return min;
         return random.nextInt(min, max);
     }
 
