@@ -62,6 +62,7 @@ public class Hack implements StringIdentifiable {
         } else {
             onDisable();
         }
+        winkel.getConfigManager().enabledHacks.save();
     }
 
     public String getName() {

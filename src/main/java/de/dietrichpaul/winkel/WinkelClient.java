@@ -1,5 +1,6 @@
 package de.dietrichpaul.winkel;
 
+import de.dietrichpaul.winkel.config.ConfigManager;
 import de.dietrichpaul.winkel.event.EventDispatcher;
 import de.dietrichpaul.winkel.feature.Chat;
 import de.dietrichpaul.winkel.feature.FriendManager;
@@ -38,6 +39,7 @@ public class WinkelClient {
     private Zoom zoom;
     private AuthenticationProviderMap authenticationProviderMap;
     private ClickEngine clickEngine;
+    private ConfigManager configManager;
 
     private File directory;
 
@@ -47,6 +49,7 @@ public class WinkelClient {
         this.directory = new File(MinecraftClient.getInstance().runDirectory, "Winkel");
         if (!this.directory.isDirectory())
             this.directory.mkdir();
+        this.configManager = new ConfigManager();
         this.propertyMap = new PropertyMap();
         this.clickPatternMap = new ClickPatternMap();
         this.chat = new Chat();
@@ -63,6 +66,7 @@ public class WinkelClient {
 
     public void start() {
         this.keyboardMapper.start();
+        this.configManager.start();
 
         IMinecraftClientMixin imc = (IMinecraftClientMixin) MinecraftClient.getInstance();
         imc.setSession(new SessionAdapter(imc.getSession(), this::getAltSession));
@@ -126,6 +130,10 @@ public class WinkelClient {
 
     public ClickPatternMap getClickPatternMap() {
         return clickPatternMap;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
 }
