@@ -3,6 +3,8 @@ package de.dietrichpaul.winkel.feature.hack.impl.movement;
 import de.dietrichpaul.winkel.event.list.UpdateListener;
 import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
+import de.dietrichpaul.winkel.property.PropertyMap;
+import de.dietrichpaul.winkel.property.list.BooleanProperty;
 import net.minecraft.client.option.KeyBinding;
 
 public class SprintHack extends Hack implements UpdateListener {
@@ -11,7 +13,12 @@ public class SprintHack extends Hack implements UpdateListener {
         super("Sprint", "", HackCategory.MOVEMENT);
     }
 
-    private boolean inAllDirection = true;
+    private BooleanProperty inAllDirection = new BooleanProperty("InAllDirection", "inAllDirection", "", false);
+
+    @Override
+    protected void makeProperties(PropertyMap map) {
+        addProperty(map, this.inAllDirection);
+    }
 
     @Override
     protected void onEnable() {
@@ -28,7 +35,7 @@ public class SprintHack extends Hack implements UpdateListener {
     public void onUpdate() {
         if (client.player.input.movementForward == 0 && client.player.input.movementSideways == 0)
             return;
-        if (inAllDirection) {
+        if (inAllDirection.getValue()) {
             client.player.setSprinting(true);
         } else {
             client.options.sprintKey.setPressed(true);
@@ -36,7 +43,7 @@ public class SprintHack extends Hack implements UpdateListener {
     }
 
     public boolean isInAllDirection() {
-        return inAllDirection;
+        return inAllDirection.getValue();
     }
 
 }

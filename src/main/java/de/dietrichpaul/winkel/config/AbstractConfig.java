@@ -34,12 +34,13 @@ public abstract class AbstractConfig {
 
     public void load() throws IOException {
         read();
-        write();
+        save();
     }
 
     public void save() {
         if (!isLoaded())
             return;
+        System.out.println("SAVED " + " " + this.name);
         try {
             this.write();
         } catch (IOException e) {

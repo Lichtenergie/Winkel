@@ -15,19 +15,12 @@ public class MacroList implements KeyInputListener {
     private final Map<String, List<String>> actions = new LinkedHashMap<>();
 
     public MacroList() {
-        bind("g", "Step");
-        bind("h", "HUD");
-        bind("j", "Sprint");
-        bind("b", "FullBright");
-        bind("k", "Spider");
-        bind("u", "FastPlace");
-        bind("i", "Jetpack");
-        bind("o", "NoFall");
         WinkelClient.INSTANCE.getEventDispatcher().subscribe(KeyInputListener.class, this);
     }
 
     public void bind(String key, String action) {
         this.actions.computeIfAbsent(key, k -> new LinkedList<>()).add(action);
+        WinkelClient.INSTANCE.getConfigManager().macro.save();
     }
 
     public void unbind(String key, int index) {
@@ -59,6 +52,10 @@ public class MacroList implements KeyInputListener {
 
     public List<String> getActions(String name) {
         return this.actions.get(name);
+    }
+
+    public Map<String, List<String>> getActions() {
+        return actions;
     }
 
 }

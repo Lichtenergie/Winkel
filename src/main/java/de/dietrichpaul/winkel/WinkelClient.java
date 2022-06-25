@@ -49,7 +49,6 @@ public class WinkelClient {
         this.directory = new File(MinecraftClient.getInstance().runDirectory, "Winkel");
         if (!this.directory.isDirectory())
             this.directory.mkdir();
-        this.configManager = new ConfigManager();
         this.propertyMap = new PropertyMap();
         this.clickPatternMap = new ClickPatternMap();
         this.chat = new Chat();
@@ -62,6 +61,7 @@ public class WinkelClient {
         this.macroList = new MacroList();
         this.zoom = new Zoom();
         this.clickEngine = new ClickEngine();
+        this.configManager = new ConfigManager();
     }
 
     public void start() {

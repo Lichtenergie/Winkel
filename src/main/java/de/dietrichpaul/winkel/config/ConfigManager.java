@@ -2,6 +2,7 @@ package de.dietrichpaul.winkel.config;
 
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.config.list.EnabledHacksConfig;
+import de.dietrichpaul.winkel.config.list.MacroConfig;
 import de.dietrichpaul.winkel.event.list.UpdateListener;
 
 import java.io.IOException;
@@ -11,9 +12,9 @@ import java.util.Set;
 
 public class ConfigManager implements UpdateListener {
 
-    private Set<AbstractConfig> configs = new LinkedHashSet<>();
-
     public EnabledHacksConfig enabledHacks = new EnabledHacksConfig();
+    public MacroConfig macro = new MacroConfig();
+    private Set<AbstractConfig> configs = new LinkedHashSet<>();
 
     public ConfigManager() {
         for (Field field : getClass().getFields()) {
@@ -48,14 +49,14 @@ public class ConfigManager implements UpdateListener {
     public void onUpdate() {
         for (AbstractConfig config : this.configs) {
             try {
-                config.load();
+                if (config.getType() == ConfigType.IN_GAME)
+                    config.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         WinkelClient.INSTANCE.getEventDispatcher().unsubscribe(UpdateListener.class, this);
     }
-
 
 
 }
