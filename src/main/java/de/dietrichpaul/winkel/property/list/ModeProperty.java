@@ -28,17 +28,22 @@ public class ModeProperty<T extends StringIdentifiable> extends AbstractProperty
 
     @Override
     public void parse(String literal) {
-
+        for (T t : this.modes) {
+            if (t.asString().equals(literal)) {
+                setValue(t);
+                break;
+            }
+        }
     }
 
     @Override
     public void readFromJson(JsonObject element) {
-
+        if (element.has("mode")) parse(element.get("mode").getAsString());
     }
 
     @Override
     public void writeToJson(JsonObject element) {
-
+        element.addProperty("mode", getValue().asString());
     }
 
     @Override

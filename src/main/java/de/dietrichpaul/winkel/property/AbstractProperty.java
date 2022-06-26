@@ -1,6 +1,7 @@
 package de.dietrichpaul.winkel.property;
 
 import com.google.gson.JsonObject;
+import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.feature.command.InternalCommandSource;
 import de.dietrichpaul.winkel.feature.command.node.SimpleArgumentBuilder;
 import de.dietrichpaul.winkel.feature.gui.tab.Item;
@@ -65,6 +66,7 @@ public abstract class AbstractProperty<T> {
 
     public void setValue(T value) {
         this.value = value;
+        WinkelClient.INSTANCE.getConfigManager().property.save();
     }
 
     public T getResetValue() {

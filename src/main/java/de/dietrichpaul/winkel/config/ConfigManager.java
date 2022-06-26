@@ -3,6 +3,7 @@ package de.dietrichpaul.winkel.config;
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.config.list.EnabledHacksConfig;
 import de.dietrichpaul.winkel.config.list.MacroConfig;
+import de.dietrichpaul.winkel.config.list.PropertyConfig;
 import de.dietrichpaul.winkel.event.list.UpdateListener;
 
 import java.io.IOException;
@@ -14,6 +15,8 @@ public class ConfigManager implements UpdateListener {
 
     public EnabledHacksConfig enabledHacks = new EnabledHacksConfig();
     public MacroConfig macro = new MacroConfig();
+    public PropertyConfig property = new PropertyConfig();
+
     private Set<AbstractConfig> configs = new LinkedHashSet<>();
 
     public ConfigManager() {
