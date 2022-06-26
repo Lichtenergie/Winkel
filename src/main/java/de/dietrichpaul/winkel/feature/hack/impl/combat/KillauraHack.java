@@ -15,6 +15,9 @@ import de.dietrichpaul.winkel.util.ArrayUtil;
 import de.dietrichpaul.winkel.util.math.MathUtil;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.security.SecureRandom;
@@ -106,6 +109,14 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
     public void click(ClickCallback callback) {
         if (client.player.getAttackCooldownProgress(0) < 1.0F && !this.legacyClicking.getValue()) {
             return;
+        }
+        if (client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
+            if (client.player.isCreative())
+                return;
+            BlockPos pos = ((BlockHitResult) client.crosshairTarget).getBlockPos();
+
+            if (client.world.getBlockState(pos).calcBlockBreakingDelta(client.player, client.world, pos) >= 1F)
+                return;
         }
         callback.pressAttack(this.clickMatrix[this.zeile][this.spalte]);
     }
