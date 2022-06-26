@@ -8,6 +8,7 @@ import de.dietrichpaul.winkel.feature.pattern.click.ClickPattern;
 import de.dietrichpaul.winkel.feature.pattern.click.impl.CustomClickPattern;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.property.PropertyMap;
+import de.dietrichpaul.winkel.property.list.BooleanProperty;
 import de.dietrichpaul.winkel.property.list.IntegerProperty;
 import de.dietrichpaul.winkel.property.list.ModeProperty;
 import de.dietrichpaul.winkel.util.ArrayUtil;
@@ -41,6 +42,8 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
         }
     };
 
+    private BooleanProperty debug = new BooleanProperty("Debug", "debug", "", false);
+
     public KillauraHack() {
         super("Killaura", "", HackCategory.COMBAT);
     }
@@ -51,6 +54,7 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
         addProperty(map, this.minCPS);
         addProperty(map, this.maxCPS);
         super.makeProperties(map);
+        addProperty(map, this.debug);
     }
 
     @Override
@@ -103,7 +107,7 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
 
     @Override
     public void onRender(RenderOverlayEvent event) {
-        if (this.clickMatrix == null)
+        if (!this.debug.getValue() || this.clickMatrix == null)
             return;
         String[] lines = new String[this.clickMatrix.length];
         double avg = 0.0;
