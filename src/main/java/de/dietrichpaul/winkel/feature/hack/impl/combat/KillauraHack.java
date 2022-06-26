@@ -43,6 +43,7 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
     };
 
     private BooleanProperty debug = new BooleanProperty("Debug", "debug", "", false);
+    private BooleanProperty legacyClicking = new BooleanProperty("LegacyClicking", "legacyClicking", "", false);
 
     public KillauraHack() {
         super("Killaura", "", HackCategory.COMBAT);
@@ -53,6 +54,7 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
         addProperty(map, this.clickPattern);
         addProperty(map, this.minCPS);
         addProperty(map, this.maxCPS);
+        addProperty(map, this.legacyClicking);
         super.makeProperties(map);
         addProperty(map, this.debug);
     }
@@ -83,6 +85,7 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
 
     @Override
     protected void postTickEngine() {
+        System.out.println();
         if (clickMatrix == null || zeile == clickMatrix.length || (spalte == clickMatrix[zeile].length - 1 && zeile == clickMatrix.length - 1)) {
             int[] cps = new int[40];
             for (int i = 0; i < cps.length; i++) {
@@ -102,6 +105,9 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
 
     @Override
     public void click(ClickCallback callback) {
+        if (client.player.getAttackCooldownProgress(0) < 1.0F && !this.legacyClicking.getValue()) {
+            return;
+        }
         callback.pressAttack(this.clickMatrix[this.zeile][this.spalte]);
     }
 
