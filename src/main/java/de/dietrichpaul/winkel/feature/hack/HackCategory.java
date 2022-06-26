@@ -8,6 +8,7 @@ public enum HackCategory {
     COMBAT("combat"),
     EXPLOIT("exploit"),
     FUN("fun"),
+    ITEM("item"),
     MOVEMENT("movement"),
     PLAYER("player"),
     VISUAL("visual");

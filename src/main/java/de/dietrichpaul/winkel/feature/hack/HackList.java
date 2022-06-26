@@ -5,6 +5,7 @@ import de.dietrichpaul.winkel.feature.hack.impl.block.FastPlaceHack;
 import de.dietrichpaul.winkel.feature.hack.impl.combat.AimbotHack;
 import de.dietrichpaul.winkel.feature.hack.impl.combat.KillauraHack;
 import de.dietrichpaul.winkel.feature.hack.impl.fun.HealthSpoofHack;
+import de.dietrichpaul.winkel.feature.hack.impl.item.AutoSwordHack;
 import de.dietrichpaul.winkel.feature.hack.impl.movement.*;
 import de.dietrichpaul.winkel.feature.hack.impl.visual.FullBrightHack;
 import de.dietrichpaul.winkel.feature.hack.impl.visual.HudHack;
@@ -28,6 +29,9 @@ public class HackList {
 
     // Fun
     public HealthSpoofHack healthSpoof = new HealthSpoofHack();
+
+    // Item
+    public AutoSwordHack autoSword = new AutoSwordHack();
 
     // Movement
     public JetpackHack jetpackHack = new JetpackHack();
