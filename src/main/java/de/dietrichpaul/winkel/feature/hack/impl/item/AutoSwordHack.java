@@ -8,6 +8,7 @@ import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.property.list.BooleanProperty;
+import de.dietrichpaul.winkel.property.list.IntegerProperty;
 import de.dietrichpaul.winkel.util.ItemUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -22,21 +23,25 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
     }
 
     private final BooleanProperty legacy = new BooleanProperty("Legacy", "legacy", "", false);
-    private final BooleanProperty swapBack = new BooleanProperty("SwapBack", "swapBack","", false);
+    private final IntegerProperty holdTicks = new IntegerProperty("HoldTicks", "holdTicks", "", 20, 0, 40);
 
     private int prev;
+    private int ticks;
+    private boolean swap;
 
     @Override
     protected void onEnable() {
         events.subscribe(InputHandleListener.class, this);
         events.subscribe(ExtensionPickTargetListener.class, this);
+        this.swap = false;
+        this.prev = -1;
     }
 
     @Override
     protected void onDisable() {
         events.unsubscribe(InputHandleListener.class, this);
         events.unsubscribe(ExtensionPickTargetListener.class, this);
-        if (this.prev != -1 && this.swapBack.getValue()) {
+        if (this.swap) {
             client.player.getInventory().selectedSlot = this.prev;
         }
     }
@@ -44,20 +49,27 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
     @Override
     protected void makeProperties(PropertyMap map) {
         addProperty(map, this.legacy);
-        addProperty(map, this.swapBack);
+        addProperty(map, this.holdTicks);
         super.makeProperties(map);
     }
 
     @Override
     public void onHandleInput(InputHandleEvent event) {
-        int prev = this.prev;
         if (client.crosshairTarget instanceof EntityHitResult ehr && ehr.getEntity() instanceof LivingEntity) {
             this.select();
         } else {
-            this.prev = -1;
+            this.swap = false;
         }
-        if (this.swapBack.getValue() && prev != -1 && this.prev == -1) {
-            client.player.getInventory().selectedSlot = prev;
+        if (!this.swap) {
+            if (this.ticks > 0) {
+                this.ticks--;
+                return;
+            }
+            if (this.ticks == 0) {
+                client.player.getInventory().selectedSlot = this.prev;
+                this.prev = -1;
+                this.ticks--;
+            }
         }
     }
 
@@ -80,7 +92,7 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
         }
 
         if (weaponSlot == -1) {
-            this.prev = -1;
+            this.swap = false;
             return;
         }
 
@@ -88,6 +100,8 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
             this.prev = client.player.getInventory().selectedSlot;
         }
         client.player.getInventory().selectedSlot = weaponSlot;
+        this.swap = true;
+        this.ticks = this.holdTicks.getValue();
     }
 
     @Override
