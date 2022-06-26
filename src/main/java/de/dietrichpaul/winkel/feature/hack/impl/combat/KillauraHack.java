@@ -85,7 +85,6 @@ public class KillauraHack extends AimbotHack implements InputHandler, RenderOver
 
     @Override
     protected void postTickEngine() {
-        System.out.println();
         if (clickMatrix == null || zeile == clickMatrix.length || (spalte == clickMatrix[zeile].length - 1 && zeile == clickMatrix.length - 1)) {
             int[] cps = new int[40];
             for (int i = 0; i < cps.length; i++) {
