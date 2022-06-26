@@ -37,7 +37,14 @@ public abstract class EntityAimbot extends SpoofAimbot implements ExtensionPickT
     @Override
     protected void onEnable() {
         switchDelay = 0;
+        events.subscribe(ExtensionPickTargetListener.class, this, this::supplyEventPriority);
         super.onEnable();
+    }
+
+    @Override
+    protected void onDisable() {
+        events.unsubscribe(ExtensionPickTargetListener.class, this);
+        super.onDisable();
     }
 
     @Override
