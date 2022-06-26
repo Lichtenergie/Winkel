@@ -2,7 +2,14 @@ package de.dietrichpaul.winkel.feature.hack.impl.combat;
 
 import de.dietrichpaul.winkel.feature.hack.HackCategory;
 import de.dietrichpaul.winkel.feature.hack.engine.rotation.EntityAimbot;
+import de.dietrichpaul.winkel.feature.pattern.rotation.RotationPattern;
+import de.dietrichpaul.winkel.feature.pattern.rotation.impl.ClosestPattern;
+import de.dietrichpaul.winkel.feature.pattern.rotation.impl.NearestPattern;
+import de.dietrichpaul.winkel.property.PropertyMap;
+import de.dietrichpaul.winkel.property.list.BooleanProperty;
 import de.dietrichpaul.winkel.property.list.FloatProperty;
+import de.dietrichpaul.winkel.property.list.ModeProperty;
+import de.dietrichpaul.winkel.util.ArrayUtil;
 import de.dietrichpaul.winkel.util.math.MathUtil;
 import de.dietrichpaul.winkel.util.raytrace.RayTraceUtil;
 import net.minecraft.entity.Entity;
@@ -26,6 +33,27 @@ public class AimbotHack extends EntityAimbot {
     private FloatProperty aimRangeProperty = new FloatProperty("Aim range", "aimRange", "", 1.5F, 1, 6, 0.25F);
     private FloatProperty throughWallRangeProperty = new FloatProperty("Through wall range", "throughWallRange",
             "Determines how far Killaura will reach", 0, 0, 12, 0.05F);
+
+    private FloatProperty margin = new FloatProperty("Margin", "margin", "", 1F, 0F, 1F, 0.05F);
+
+    private ModeProperty<RotationPattern> rotationPattern = new ModeProperty<>("RotationPattern", "rotationPattern", "", 0,
+            ArrayUtil.addToNew(winkel.getRotationPatternMap().getMap().values(),
+                    new ClosestPattern(margin::getValue),
+                    new NearestPattern(margin::getValue)
+            ));
+
+    private BooleanProperty fitRotations = new BooleanProperty("FitRotations", "fitRotations","", true);
+
+    @Override
+    protected void makeProperties(PropertyMap map) {
+        addProperty(map, this.rangeProperty);
+        addProperty(map, this.aimRangeProperty);
+        addProperty(map, this.throughWallRangeProperty);
+        addProperty(map, this.margin);
+        addProperty(map, this.rotationPattern);
+        addProperty(map, this.fitRotations);
+        super.makeProperties(map);
+    }
 
     @Override
     protected float getCombatRange() {
@@ -93,11 +121,49 @@ public class AimbotHack extends EntityAimbot {
 
     @Override
     public void tickEngine(float[] previous, float[] decelerate, float[] rotations) {
-        Vec3d camera = client.player.getCameraPosVec(1.0F);
-        Vec3d hitVec = MathUtil.clampAABB(this.target.getBoundingBox().expand(this.target.getTargetingMargin()), camera);
-        MathUtil.getRotations(rotations, camera, hitVec);
-        rotations[1] += Math.random() * 5 - 3;
-        rotations[0] += Math.random() * 5 - 3;
+        float[] pattern = new float[2];
+        this.rotationPattern.getValue().generateRotations(client.player.getCameraPosVec(1.0F), this.target, previous, decelerate, pattern);
+
+        if (!fitRotations.getValue()) {
+            rotations[0] = pattern[0];
+            rotations[1] = pattern[1];
+            return;
+        }
+
+        Box aabb = this.target.getBoundingBox().expand(this.margin.getValue());
+        double smallestDiff = Double.MAX_VALUE;
+        float clip = 1 / 10F;
+
+        for (float x = 0; x <= 1; x += clip) {
+            for (float y = 0; y <= 1; y += clip) {
+                for (float z = 0; z <= 1; z += clip) {
+                    Vec3d lerp = new Vec3d(
+                            MathHelper.lerp(x, aabb.minX, aabb.maxX),
+                            MathHelper.lerp(y, aabb.minY, aabb.maxY),
+                            MathHelper.lerp(z, aabb.minZ, aabb.maxZ)
+                    );
+                    float[] temp = new float[2];
+                    float[] out = new float[2];
+                    MathUtil.getRotations(temp, client.player.getCameraPosVec(1.0F), lerp);
+                    filterRotationSensitivity(previous, temp, out);
+
+                    HitResult hitResult = RayTraceUtil.rayTrace(client, out, out, client.interactionManager.getReachDistance(), this.rangeProperty.getValue(), 1.0F).collision();
+                    if (hitResult == null || hitResult.getType() != HitResult.Type.ENTITY)
+                        continue;
+
+                    float yawDelta = MathHelper.angleBetween(pattern[0], out[0]);
+                    float pitchDelta = MathHelper.angleBetween(pattern[1], out[1]);
+                    double aimLength = Math.hypot(yawDelta, pitchDelta);
+
+                    if (aimLength >= smallestDiff)
+                        continue;
+
+                    smallestDiff = aimLength;
+                    rotations[0] = temp[0];
+                    rotations[1] = temp[1];
+                }
+            }
+        }
     }
 
 }

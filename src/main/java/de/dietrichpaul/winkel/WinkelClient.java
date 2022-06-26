@@ -13,6 +13,7 @@ import de.dietrichpaul.winkel.feature.command.CommandManager;
 import de.dietrichpaul.winkel.feature.hack.HackList;
 import de.dietrichpaul.winkel.feature.hack.engine.click.ClickEngine;
 import de.dietrichpaul.winkel.feature.pattern.click.ClickPatternMap;
+import de.dietrichpaul.winkel.feature.pattern.rotation.RotationPatternMap;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.util.keyboard.KeyboardMapper;
@@ -40,6 +41,7 @@ public class WinkelClient {
     private AuthenticationProviderMap authenticationProviderMap;
     private ClickEngine clickEngine;
     private ConfigManager configManager;
+    private RotationPatternMap rotationPatternMap;
 
     private File directory;
 
@@ -51,6 +53,7 @@ public class WinkelClient {
             this.directory.mkdir();
         this.propertyMap = new PropertyMap();
         this.clickPatternMap = new ClickPatternMap();
+        this.rotationPatternMap = new RotationPatternMap();
         this.chat = new Chat();
         this.authenticationProviderMap = new AuthenticationProviderMap();
         this.eventDispatcher = new EventDispatcher();
@@ -134,6 +137,10 @@ public class WinkelClient {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public RotationPatternMap getRotationPatternMap() {
+        return rotationPatternMap;
     }
 
 }
