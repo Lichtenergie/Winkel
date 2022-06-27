@@ -16,6 +16,8 @@
   "command.friend.remove": "Unfriended %s.",
   "command.clickpattern.start": "Recording started.",
   "command.clickpattern.stop": "Stopped recording: %s seconds",
+  "hack.wtap.stop": "(WTAP) Stop",
+  "hack.wtap.sprinting": "(WTAP) Sprinting",
   "category.winkel": "Winkel",
   "key.winkel.zoom": "Zoom",
   "category.block": "Block",

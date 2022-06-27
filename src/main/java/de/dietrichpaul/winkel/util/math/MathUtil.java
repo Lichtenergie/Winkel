@@ -1,5 +1,7 @@
 package de.dietrichpaul.winkel.util.math;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -7,6 +9,13 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Random;
 
 public class MathUtil {
+
+    public static int getLatencyTicks(MinecraftClient client) {
+        PlayerListEntry entry = client.getNetworkHandler().getPlayerListEntry(client.player.getUuid());
+        if (entry == null)
+            return 1;
+        return MathHelper.ceil(entry.getLatency() / 50D);
+    }
 
     public static double getWeightedRandom(Random random, MathFunction weight) {
         return MathHelper.clamp(weight.f(random.nextDouble()), 0.0, 1.0);

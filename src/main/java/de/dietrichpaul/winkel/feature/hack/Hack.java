@@ -2,6 +2,7 @@ package de.dietrichpaul.winkel.feature.hack;
 
 import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.EventDispatcher;
+import de.dietrichpaul.winkel.feature.Chat;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.property.PropertyMap;
 import de.dietrichpaul.winkel.property.list.BooleanProperty;
@@ -21,6 +22,7 @@ public class Hack implements StringIdentifiable {
     protected MinecraftClient client = MinecraftClient.getInstance();
     protected WinkelClient winkel = WinkelClient.INSTANCE;
     protected EventDispatcher events = winkel.getEventDispatcher();
+    protected Chat chat = winkel.getChat();
 
     private boolean enabled;
 

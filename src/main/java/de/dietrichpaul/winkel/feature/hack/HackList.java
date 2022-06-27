@@ -39,6 +39,7 @@ public class HackList {
     public SpiderHack spider = new SpiderHack();
     public SprintHack sprint = new SprintHack();
     public StepHack step = new StepHack();
+    public WTapHack wtap = new WTapHack();
 
     // Visual
     public FullBrightHack fullBright = new FullBrightHack();
