@@ -41,7 +41,7 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
     protected void onDisable() {
         events.unsubscribe(InputHandleListener.class, this);
         events.unsubscribe(ExtensionPickTargetListener.class, this);
-        if (this.swap) {
+        if (this.swap && this.prev != -1) {
             client.player.getInventory().selectedSlot = this.prev;
         }
     }
@@ -65,7 +65,7 @@ public class AutoSwordHack extends Hack implements InputHandleListener, Extensio
                 this.ticks--;
                 return;
             }
-            if (this.ticks == 0) {
+            if (this.ticks == 0 && this.prev != -1) {
                 client.player.getInventory().selectedSlot = this.prev;
                 this.prev = -1;
                 this.ticks--;

@@ -4,6 +4,7 @@ import de.dietrichpaul.winkel.WinkelClient;
 import de.dietrichpaul.winkel.event.EventDispatcher;
 import de.dietrichpaul.winkel.property.AbstractProperty;
 import de.dietrichpaul.winkel.property.PropertyMap;
+import de.dietrichpaul.winkel.property.list.BooleanProperty;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.MutableText;
@@ -23,6 +24,8 @@ public class Hack implements StringIdentifiable {
 
     private boolean enabled;
 
+    private BooleanProperty disableOnDeath = new BooleanProperty("DisableOnDeath", "disableOnDeath", "", false);
+
     public Hack(String name, String description, HackCategory category) {
         this.name = name;
         this.description = description;
@@ -40,6 +43,7 @@ public class Hack implements StringIdentifiable {
     }
 
     protected void makeProperties(PropertyMap map) {
+        addProperty(map, this.disableOnDeath);
     }
 
     protected boolean isGameFocused() {
@@ -88,6 +92,10 @@ public class Hack implements StringIdentifiable {
     @Override
     public String asString() {
         return this.name;
+    }
+
+    public BooleanProperty getDisableOnDeath() {
+        return disableOnDeath;
     }
 
 }

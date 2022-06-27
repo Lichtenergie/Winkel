@@ -8,6 +8,7 @@ import de.dietrichpaul.winkel.event.list.InputHandleListener;
 import de.dietrichpaul.winkel.event.list.raytrace.PostRayTraceListener;
 import de.dietrichpaul.winkel.event.list.raytrace.PreRayTraceListener;
 import de.dietrichpaul.winkel.event.list.tick.hud.PostTickHudListener;
+import de.dietrichpaul.winkel.feature.hack.Hack;
 import de.dietrichpaul.winkel.injection.accessor.client.IMinecraftClientMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
@@ -83,6 +84,12 @@ public abstract class MinecraftClientMixin implements IMinecraftClientMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;tick(Z)V", shift = At.Shift.AFTER))
     public void onPostHudTick(CallbackInfo ci) {
+        if (this.player != null && this.player.isDead()) {
+            for (Hack hack : WinkelClient.INSTANCE.getHackList().getHacks()) {
+                if (hack.getDisableOnDeath().getValue())
+                    hack.setEnabled(false);
+            }
+        }
         WinkelClient.INSTANCE.getEventDispatcher().post(PostTickHudListener.PostTickHudEvent.INSTANCE);
     }
 
