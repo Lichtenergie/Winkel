@@ -16,7 +16,7 @@ public class WTapHack extends Hack implements UpdateListener {
     private boolean effecting;
 
     public WTapHack() {
-        super("WTap", "", HackCategory.COMBAT);
+        super("WTap", "", HackCategory.MOVEMENT);
     }
 
     @Override
