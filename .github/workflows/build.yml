@@ -40,7 +40,7 @@ jobs:
           name: Artifacts
           path: build/libs/
           
-      # Publish files to gitub
+      # Create release on github
       - name: publish
         if: ${{ runner.os == 'Linux' }} # Only publish release built on Ubuntu
         id: create_release
@@ -54,7 +54,8 @@ jobs:
             Auto-Created Release
           draft: false
           prerelease: false
-          
+      
+      # Publish build files to github
       - name: Publish Assets
         if: ${{ runner.os == 'Linux' }} # Only publish files built on Ubuntu
         id: create_release_assets
