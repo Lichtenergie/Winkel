@@ -299,7 +299,7 @@ public abstract class AbstractRotationSpoof extends Hack
 
                 if (strafing == 0 && forward == 0) continue;
 
-                if (this.strafeMode.sprint && forward <= 0 && client.options.sprintKey.isPressed()) continue;
+                if (this.strafeMode.sprint && forward <= 0 && event.getMovementForward() > 0) continue;
 
                 float bruteforceAngle = (float) (Math.toDegrees(Math.atan2(Math.signum(-strafing), Math.signum(forward))) + this.rotations[0]);
                 if (forward == 1 && strafing == 0) bruteforceAngle = this.rotations[0];
