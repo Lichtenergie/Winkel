@@ -134,6 +134,7 @@ public class AimbotHack extends EntityAimbot {
         double smallestDiff = Double.MAX_VALUE;
         float clip = 1 / 10F;
 
+        boolean found = false;
         for (float x = 0; x <= 1; x += clip) {
             for (float y = 0; y <= 1; y += clip) {
                 for (float z = 0; z <= 1; z += clip) {
@@ -161,8 +162,13 @@ public class AimbotHack extends EntityAimbot {
                     smallestDiff = aimLength;
                     rotations[0] = temp[0];
                     rotations[1] = temp[1];
+                    found = true;
                 }
             }
+        }
+        if (!found) {
+            rotations[0] = pattern[0];
+            rotations[1] = pattern[1];
         }
     }
 
