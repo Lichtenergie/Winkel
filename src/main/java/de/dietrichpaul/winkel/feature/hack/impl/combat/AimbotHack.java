@@ -124,7 +124,12 @@ public class AimbotHack extends EntityAimbot {
         float[] pattern = new float[2];
         this.rotationPattern.getValue().generateRotations(client.player.getCameraPosVec(1.0F), this.target, previous, decelerate, pattern);
 
-        if (!fitRotations.getValue()) {
+        float[] filtered = new float[2];
+        filterRotationSensitivity(previous, pattern, filtered);
+        HitResult filteredHitResult = RayTraceUtil.rayTrace(client, filtered, filtered, client.interactionManager.getReachDistance(), this.rangeProperty.getValue(), 1.0F).collision();
+
+
+        if (!fitRotations.getValue() || filteredHitResult != null && filteredHitResult.getType() == HitResult.Type.ENTITY) {
             rotations[0] = pattern[0];
             rotations[1] = pattern[1];
             return;
@@ -134,6 +139,7 @@ public class AimbotHack extends EntityAimbot {
         double smallestDiff = Double.MAX_VALUE;
         float clip = 1 / 10F;
 
+        boolean found = false;
         for (float x = 0; x <= 1; x += clip) {
             for (float y = 0; y <= 1; y += clip) {
                 for (float z = 0; z <= 1; z += clip) {
@@ -161,8 +167,13 @@ public class AimbotHack extends EntityAimbot {
                     smallestDiff = aimLength;
                     rotations[0] = temp[0];
                     rotations[1] = temp[1];
+                    found = true;
                 }
             }
+        }
+        if (!found) {
+            rotations[0] = pattern[0];
+            rotations[1] = pattern[1];
         }
     }
 
