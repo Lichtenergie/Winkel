@@ -30,10 +30,40 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: build
-        run: ./gradlew build
+        run: |
+         ./gradlew build
+         zip --junk-paths artifact.zip ./build/libs/*
       - name: capture build artifacts
         if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
           path: build/libs/
+          
+      # Publish files to gitub
+      - name: publish
+        if: ${{ runner.os == 'Linux' }} # Only publish release built on Ubuntu
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_id }}
+          release_name: Release ${{ github.run_id }}
+          body: |
+            Auto-Created Release
+          draft: false
+          prerelease: false
+          
+      - name: Publish Assets
+        if: ${{ runner.os == 'Linux' }} # Only publish files built on Ubuntu
+        id: create_release_assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./artifact.zip
+          asset_name: artifact.zip
+          asset_content_type: application/zip
+          
