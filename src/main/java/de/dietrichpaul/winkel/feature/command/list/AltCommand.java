@@ -25,32 +25,29 @@ public class AltCommand extends Command {
     @Override
     public void build(SimpleBaseArgumentBuilder<InternalCommandSource> base) {
         for (Map.Entry<String, AuthenticationProvider<?>> entry : winkel.getAuthenticationProviderMap().getProviders().entrySet()) {
-            SimpleLiteralArgumentBuilder<InternalCommandSource> start = literal(entry.getKey().toLowerCase(Locale.ROOT));
-            SimpleArgumentBuilder<InternalCommandSource, ?> iterativeTemp = start;
-            AuthenticationProvider authenticationProvider = entry.getValue();
-            CredentialField[] field = authenticationProvider.getCredentialField();
-            for (int i = 0; i < field.length; i++) {
-                CredentialField credentialField = field[i];
-                SimpleArgumentBuilder<InternalCommandSource, ?> temp = argument(credentialField.getName(), StringArgumentType.string());
-                if (i == field.length - 1) {
-                    temp.executes(ctx -> {
-                        Map<String, String> textBoxes = new HashMap<>();
-                        for (CredentialField tempField : authenticationProvider.getCredentialField()) {
-                            textBoxes.put(tempField.getName(), StringArgumentType.getString(ctx, tempField.getName()));
-                        }
-                        AltSession session = authenticationProvider.create(textBoxes);
-                        try {
-                            authenticationProvider.login(session);
-                            winkel.setAltSession(session);
-                        } catch (AuthenticationException e) {
-                            winkel.getChat().error(Text.literal(e.getMessage()));
-                        }
-                    });
+            SimpleArgumentBuilder<InternalCommandSource, ?> temp = null;
+            for (int i = entry.getValue().getCredentialField().length - 1; i >= 0; i--) {
+                if (i == entry.getValue().getCredentialField().length - 1) {
+                    temp = argument(entry.getValue().getCredentialField()[i].getName(), StringArgumentType.string())
+                            .executes(ctx -> {
+                                Map<String, String> textBoxes = new HashMap<>();
+                                for (CredentialField tempField : entry.getValue().getCredentialField()) {
+                                    textBoxes.put(tempField.getName(), StringArgumentType.getString(ctx, tempField.getName()));
+                                }
+                                AltSession session = entry.getValue().create(textBoxes);
+                                try {
+                                    ((AuthenticationProvider) entry.getValue()).login(session);
+                                    winkel.setAltSession(session);
+                                } catch (AuthenticationException e) {
+                                    winkel.getChat().error(Text.literal(e.getMessage()));
+                                }
+                            });
+                    continue;
                 }
-                iterativeTemp.then(temp);
-                iterativeTemp = temp;
+                temp = argument(entry.getValue().getCredentialField()[i].getName(), StringArgumentType.string())
+                        .then(temp);
             }
-            base.then(start);
+            base.then(literal(entry.getKey()).then(temp));
         }
     }
 
