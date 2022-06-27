@@ -12,7 +12,6 @@ import net.minecraft.util.hit.EntityHitResult;
 
 public class WTapHack extends Hack implements UpdateListener {
 
-    private BooleanProperty jump = new BooleanProperty("Jump", "jump", "", false);
     private BooleanProperty debug = new BooleanProperty("Debug", "debug", "", false);
     private boolean effecting;
 
@@ -22,7 +21,6 @@ public class WTapHack extends Hack implements UpdateListener {
 
     @Override
     protected void makeProperties(PropertyMap map) {
-        map.register(this, this.jump);
         map.register(this, this.debug);
         super.makeProperties(map);
     }
