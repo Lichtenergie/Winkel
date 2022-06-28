@@ -32,7 +32,7 @@ public abstract class CameraMixin implements ICameraMixin {
         this.prevTickDelta = tickDelta;
     }
 
-    @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
+    @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V", ordinal = 0))
     public void setRotation(Camera instance, float yaw, float pitch) {
         CameraTransformRotationListener.CameraTransformRotationEvent event
                 = new CameraTransformRotationListener.CameraTransformRotationEvent(yaw, pitch, this.prevTickDelta);
