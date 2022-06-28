@@ -27,6 +27,7 @@ public class WinkelClient {
 
     public static final String NAME = "Winkel";
     public static final String VERSION = "2.0.0-release.1";
+    public static final boolean DEBUG_GUI = false;
 
     private EventDispatcher eventDispatcher;
     private HackList hackList;

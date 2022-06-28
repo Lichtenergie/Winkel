@@ -172,6 +172,19 @@ public class AimbotHack extends EntityAimbot {
             }
         }
         if (!found) {
+            float[] temp = new float[2];
+            float[] out = new float[2];
+            MathUtil.getRotations(temp, client.player.getCameraPosVec(1.0F), MathUtil.clampAABB(aabb, client.player.getCameraPosVec(1.0F)));
+            filterRotationSensitivity(previous, temp, out);
+
+            HitResult hitResult = RayTraceUtil.rayTrace(client, out, out, client.interactionManager.getReachDistance(), this.rangeProperty.getValue(), 1.0F).collision();
+            if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
+                found = true;
+                rotations[0] = temp[0];
+                rotations[1] = temp[1];
+            }
+        }
+        if (!found) {
             rotations[0] = pattern[0];
             rotations[1] = pattern[1];
         }

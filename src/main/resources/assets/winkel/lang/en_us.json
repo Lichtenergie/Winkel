@@ -27,5 +27,6 @@
   "category.item": "Item",
   "category.movement": "Movement",
   "category.player": "Player",
-  "category.visual": "Visual"
+  "category.visual": "Visual",
+  "screen.mainmenu.title": "WinkelClient"
 }

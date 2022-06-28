@@ -10,6 +10,7 @@
     "client.gui.hud.InGameHudMixin",
     "client.gui.screen.ChatScreenMixin",
     "client.gui.screen.CommandSuggestorMixin",
+    "client.gui.screen.TitleScreenMixin",
     "client.input.KeyboardInputMixin",
     "client.network.ClientLoginNetworkHandlerMixin",
     "client.network.ClientPlayerEntityMixin",
