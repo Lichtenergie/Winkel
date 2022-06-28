@@ -52,7 +52,7 @@ jobs:
           tag_name: ${{ github.run_id }}
           release_name: Release ${{ github.run_id }}
           body: |
-            Auto-Created Release
+            ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
       
